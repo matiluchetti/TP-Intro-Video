@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementController : MonoBehaviour, IMoveablle
@@ -9,20 +7,27 @@ public class MovementController : MonoBehaviour, IMoveablle
     private float _speed = 10;
     #endregion
 
+    private Rigidbody _rb;
+
+    private void Start()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
+
     #region IMOVEABLE_METHODS
     public void Move(Vector3 direction)
     {
-        transform.position += direction * Time.deltaTime * Speed;
+        _rb.linearVelocity = new Vector3(direction.x * Speed, _rb.linearVelocity.y, direction.z * Speed);
     }
     #endregion
 
-    //[SerializeField] private float _timer = 10;
-    //void Update()
-    //{
-    //    _timer -= Time.deltaTime;
-    //    if (_timer <= 0)
-    //    {
-    //        Debug.Log("Do something");
-    //    }
-    //}
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Zombie"))
+        {
+            Vector3 pushDirection = (transform.position - collision.transform.position).normalized;
+
+            _rb.AddForce(pushDirection * 5f, ForceMode.Impulse);  // Ajusta la fuerza según sea necesario
+        }
+    }
 }
