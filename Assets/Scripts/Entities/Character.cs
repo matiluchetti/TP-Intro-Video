@@ -6,6 +6,7 @@ public class Character : MonoBehaviour
 {
     private MovementController _movementController;
     [SerializeField] private Gun _gun;
+    [SerializeField] private CharacterCamera _camera;
 
     // BINDING ATTACK KEYS
     [SerializeField] private KeyCode _shoot = KeyCode.Mouse0;
@@ -13,7 +14,7 @@ public class Character : MonoBehaviour
     // BINDING MOVEMENT KEYS
     [SerializeField] private KeyCode _moveForward = KeyCode.W;
     [SerializeField] private KeyCode _moveBack = KeyCode.S;
-    [SerializeField] private KeyCode _MoveLeft = KeyCode.A;
+    [SerializeField] private KeyCode _moveLeft = KeyCode.A;
     [SerializeField] private KeyCode _moveRight = KeyCode.D;
 
     private Vector3 pushBackOffset = Vector3.zero;
@@ -21,52 +22,61 @@ public class Character : MonoBehaviour
 
     private bool inputBlocked = false;
 
-    void Start() {
+    void Start()
+    {
         _movementController = GetComponent<MovementController>();
+        if (_camera == null)
+        {
+            _camera = FindObjectOfType<CharacterCamera>();
+        }
     }
 
-    void Update() {
-        if (inputBlocked) {
+    void Update()
+    {
+        if (inputBlocked)
+        {
             transform.position += pushBackOffset * Time.deltaTime * pushBackSpeed;
             pushBackOffset = Vector3.Lerp(pushBackOffset, Vector3.zero, Time.deltaTime * 5f);
             return;
         }
 
-        Vector3 moveDir = Vector3.zero;
+        // MOVEMENT INPUT
+        Vector3 inputDir = Vector3.zero;
+        if (Input.GetKey(_moveForward)) inputDir += Vector3.forward;
+        if (Input.GetKey(_moveBack)) inputDir += Vector3.back;
+        if (Input.GetKey(_moveRight)) inputDir += Vector3.right;
+        if (Input.GetKey(_moveLeft)) inputDir += Vector3.left;
 
-        if (Input.GetKey(_moveForward)) moveDir += transform.forward;
-        if (Input.GetKey(_moveBack)) moveDir -= transform.forward;
-        if (Input.GetKey(_moveRight)) moveDir += transform.right;
-        if (Input.GetKey(_MoveLeft)) moveDir -= transform.right;
+        inputDir.Normalize();
 
-        moveDir.Normalize();
-
-        if (moveDir != Vector3.zero) {
-            _movementController.Move(moveDir);
-            if (!Input.GetKey(_moveBack) || moveDir != -transform.forward) {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDir);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
-            }
+        if (inputDir != Vector3.zero)
+        {
+            // Rotate input direction based on camera rotation
+            inputDir = _camera.transform.rotation * inputDir;
+            _movementController.Move(inputDir);
         }
 
+        // SHOOTING & RELOADING
         if (Input.GetKeyDown(_shoot)) _gun.Attack();
         if (Input.GetKeyDown(_reload)) _gun.Reload();
 
+        // DEBUG INPUTS
         if (Input.GetKeyDown(KeyCode.Return)) EventManager.instance.EventGameOver(true);
         if (Input.GetKeyDown(KeyCode.Backspace)) GetComponent<IDamagable>().TakeDamage(10);
     }
 
-
-    private void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("Zombie") && !inputBlocked) {
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Zombie") && !inputBlocked)
+        {
             Vector3 pushDir = (transform.position - collision.transform.position).normalized;
             pushBackOffset = pushDir * 1f;
-
             StartCoroutine(BlockInputTemporarily(0.2f));
         }
     }
 
-    private IEnumerator BlockInputTemporarily(float duration) {
+    private IEnumerator BlockInputTemporarily(float duration)
+    {
         inputBlocked = true;
         yield return new WaitForSeconds(duration);
         inputBlocked = false;

@@ -554,11 +554,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gun: {fileID: 0}
+  _camera: {fileID: 0}
   _shoot: 323
   _reload: 114
   _moveForward: 119
   _moveBack: 115
-  _MoveLeft: 97
+  _moveLeft: 97
   _moveRight: 100
 --- !u!114 &397601839
 MonoBehaviour:
@@ -1620,6 +1621,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1701,6 +1703,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 397601842}
   m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 655df1eccfb6f44a48a869848f1a3faa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turn: {x: 0, y: 0}
+  sensitivity: 2
 --- !u!4 &1289836160 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8282348425266949567, guid: 14bb59ebe75d4c944a2e50a4d5d10e77, type: 3}
