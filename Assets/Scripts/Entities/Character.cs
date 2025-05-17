@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Strategy;
 public class Character : MonoBehaviour
 {
     private MovementController _movementController;
@@ -67,7 +67,7 @@ public class Character : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Zombie") && !inputBlocked)
+        if (collision.gameObject.CompareTag("Respawn") && !inputBlocked)
         {
             Vector3 pushDir = (transform.position - collision.transform.position).normalized;
             pushBackOffset = pushDir * 1f;

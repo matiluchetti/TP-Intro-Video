@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class MovementController : MonoBehaviour, IMoveablle
+using Strategy;
+public class MovementController : MonoBehaviour, IMoveable
 {
     #region IMOVEABLE_PROPERTIES
     public float Speed => _speed;
@@ -13,6 +13,11 @@ public class MovementController : MonoBehaviour, IMoveablle
     public void Move(Vector3 direction)
     {
         transform.position += direction * Time.deltaTime * Speed;
+    }
+
+    public void RotateTowards(Vector3 point)
+    {
+        transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
     }
     #endregion
 }
