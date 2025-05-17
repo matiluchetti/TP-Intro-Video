@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour, IBullet
     [SerializeField] private float _lifetime = 5;
     [SerializeField] private List<int> _layerMasks;
     private float _timeRemaining;
+    private Quaternion rotation;
     #endregion
 
     #region I_BULLET_PROPERTIES
@@ -22,7 +23,7 @@ public class Bullet : MonoBehaviour, IBullet
     #region I_BULLET_METHODS
     public void Travel(){
         GameObject player = GameObject.FindWithTag("Player");
-         transform.position += player.transform.rotation * transform.forward * Time.deltaTime * Speed;
+         transform.position +=rotation * transform.forward * Time.deltaTime * Speed;
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -39,7 +40,8 @@ public class Bullet : MonoBehaviour, IBullet
 
     #region UNITY_EVENTS
     void Start() { 
-
+        GameObject player = GameObject.FindWithTag("Player");
+        rotation = player.transform.rotation;
         _timeRemaining = _lifetime;
     }
 

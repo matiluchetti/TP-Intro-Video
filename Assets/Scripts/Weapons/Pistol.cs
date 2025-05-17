@@ -7,7 +7,7 @@ public class Pistol : Gun
     public override void Attack() => Instantiate(
         BulletPrefab, 
         transform.position, 
-        transform.rotation);
+        Quaternion.identity);
 
     public override void Reload() => base.Reload();
 }
