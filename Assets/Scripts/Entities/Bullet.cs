@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour, IBullet
     [SerializeField] private float _speed = 10;
     [SerializeField] private float _lifetime = 5;
     [SerializeField] private List<int> _layerMasks;
+    private float _timeRemaining;
     #endregion
 
     #region I_BULLET_PROPERTIES
@@ -19,7 +20,10 @@ public class Bullet : MonoBehaviour, IBullet
     #endregion
 
     #region I_BULLET_METHODS
-    public void Travel() => transform.position += transform.forward * Time.deltaTime * Speed;
+    public void Travel(){
+        GameObject player = GameObject.FindWithTag("Player");
+         transform.position += player.transform.rotation * transform.forward * Time.deltaTime * Speed;
+    }
 
     public void OnCollisionEnter(Collision collision)
     {
@@ -34,14 +38,17 @@ public class Bullet : MonoBehaviour, IBullet
     #endregion
 
     #region UNITY_EVENTS
-    void Start() { }
+    void Start() { 
+
+        _timeRemaining = _lifetime;
+    }
 
     void Update()
     {
         Travel();
 
-        _lifetime -= Time.deltaTime;
-        if (_lifetime <= 0) Destroy(this.gameObject);
+        _timeRemaining -= Time.deltaTime;
+        if (_timeRemaining <= 0) Destroy(this.gameObject);
     }
     #endregion
 }
