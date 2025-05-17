@@ -59,24 +59,25 @@ public class CharacterInputManager : MonoBehaviour
         SwitchWeapon((int)WeaponIndex.Pistol);
 
         Quaternion rotation = Quaternion.AngleAxis(-45, Vector3.up);
-        Vector3 backward = rotation * new Vector3(0, 0, -1);
-        Vector3 forward = rotation * new Vector3(0, 0, 1);
-        Vector3 left = rotation * new Vector3(-1, 0, 0);
-        Vector3 right = rotation * new Vector3(1, 0, 0);
+        Vector3 backward = rotation * transform.forward * -1;
+        Vector3 forward = rotation * transform.forward;
+        Vector3 left = rotation * transform.right * -1;
+        Vector3 right = rotation * transform.right;
         Vector3 forwardLeft = Vector3.Normalize(forward + left);
         Vector3 forwardRight = Vector3.Normalize(forward + right);
         Vector3 backwardLeft = Vector3.Normalize(backward + left);
         Vector3 backwardRight = Vector3.Normalize(backward + right);
 
+    
         _cmdRotateTowardsMouse = new CmdRotateTowardsMouse(_player);
-        _cmdMoveBackward = new CmdMovement(backward, _player);
-        _cmdMoveForward = new CmdMovement(forward, _player);
-        _cmdMoveLeft = new CmdMovement(left, _player);
-        _cmdMoveRight = new CmdMovement(right, _player);
-        _cmdMoveForwardLeft = new CmdMovement(forwardLeft, _player);
-        _cmdMoveForwardRight = new CmdMovement(forwardRight, _player);
-        _cmdMoveBackwardLeft = new CmdMovement(backwardLeft, _player);
-        _cmdMoveBackwardRight = new CmdMovement(backwardRight, _player);
+        // _cmdMoveBackward = new CmdMovement(backward, _player);
+        // _cmdMoveForward = new CmdMovement(forward, _player);
+        // _cmdMoveLeft = new CmdMovement(left, _player);
+        // _cmdMoveRight = new CmdMovement(right, _player);
+        // _cmdMoveForwardLeft = new CmdMovement(forwardLeft, _player);
+        // _cmdMoveForwardRight = new CmdMovement(forwardRight, _player);
+        // _cmdMoveBackwardLeft = new CmdMovement(backwardLeft, _player);
+        // _cmdMoveBackwardRight = new CmdMovement(backwardRight, _player);
 
         _cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
@@ -125,27 +126,41 @@ public class CharacterInputManager : MonoBehaviour
     {
         _cmdRotateTowardsMouse.Do();
 
+        // Direcciones actualizadas en tiempo real según rotación del personaje
+        Vector3 forward = transform.forward;
+        Vector3 right = transform.right;
+        Vector3 backward = -forward;
+        Vector3 left = -right;
+
+        Vector3 forwardLeft = Vector3.Normalize(forward + left);
+        Vector3 forwardRight = Vector3.Normalize(forward + right);
+        Vector3 backwardLeft = Vector3.Normalize(backward + left);
+        Vector3 backwardRight = Vector3.Normalize(backward + right);
+
         if (Input.GetKey(_moveForward))
         {
             if (Input.GetKey(_moveLeft))
-                _cmdMoveForwardLeft.Do();
+                new CmdMovement(forwardLeft, _player).Do();
             else if (Input.GetKey(_moveRight))
-                _cmdMoveForwardRight.Do();
+                new CmdMovement(forwardRight, _player).Do();
             else
-                _cmdMoveForward.Do();
+                new CmdMovement(forward, _player).Do();
         }
         else if (Input.GetKey(_moveBackward))
         {
             if (Input.GetKey(_moveLeft))
-                _cmdMoveBackwardLeft.Do();
+                new CmdMovement(backwardLeft, _player).Do();
             else if (Input.GetKey(_moveRight))
-                _cmdMoveBackwardRight.Do();
+                new CmdMovement(backwardRight, _player).Do();
             else
-                _cmdMoveBackward.Do();
+                new CmdMovement(backward, _player).Do();
         }
-        else if (Input.GetKey(_moveLeft)) _cmdMoveLeft.Do();
-        else if (Input.GetKey(_moveRight)) _cmdMoveRight.Do();
-    }
+        else if (Input.GetKey(_moveLeft))
+            new CmdMovement(left, _player).Do();
+        else if (Input.GetKey(_moveRight))
+            new CmdMovement(right, _player).Do();
+        }
+
 
     private void LateUpdate()
     {
