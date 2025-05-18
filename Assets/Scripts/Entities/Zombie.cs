@@ -59,6 +59,10 @@ public class ZombieAI : MonoBehaviour, IDamagable
         {
             Die();
         }
+        else{
+            Vector3 pushDir = -transform.forward;
+            StartCoroutine(PushBack(pushDir * 10f, 0.3f));
+        }
     }
 
     private void Die()

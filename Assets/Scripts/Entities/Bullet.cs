@@ -33,8 +33,9 @@ public class Bullet : MonoBehaviour, IBullet
             IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
             damagable?.TakeDamage(Damage);
 
-            Destroy(this.gameObject);
         }
+        
+            Destroy(this.gameObject);
     }
     #endregion
 
