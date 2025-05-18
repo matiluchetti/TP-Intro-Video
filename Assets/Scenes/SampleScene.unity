@@ -768,6 +768,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 6944003692870370946, guid: 0dd371f56924b9c4fb65c6b343316efe, type: 3}
   _shotClip: {fileID: 8300000, guid: e4e9c8cd92ae9874abdbd5794bb9dece, type: 3}
   _shotCount: 5
+  _emptyClip: {fileID: 8300000, guid: c17e2154bbb54124f927f207b997f849, type: 3}
 --- !u!82 &511053080
 AudioSource:
   m_ObjectHideFlags: 0
