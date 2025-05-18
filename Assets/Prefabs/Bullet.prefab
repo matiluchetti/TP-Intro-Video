@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 10
-  _speed: 10
+  _speed: 100
   _lifetime: 5
   _layerMasks: 08000000
 --- !u!54 &8375600131654720752
