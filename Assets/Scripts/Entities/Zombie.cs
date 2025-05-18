@@ -33,7 +33,7 @@ public class ZombieAI : MonoBehaviour, IDamagable
         if (target == null) return;
 
         Vector3 direction = (target.position - transform.position);
-        direction.y = 0f; // 🔑 Elimina componente vertical para no mirar arriba/abajo
+        direction.y = 0f; 
         direction.Normalize();
 
         // Moverse hacia el jugador

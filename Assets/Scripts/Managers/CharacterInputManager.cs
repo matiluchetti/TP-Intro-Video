@@ -21,7 +21,7 @@ public class CharacterInputManager : MonoBehaviour
     private KeyCode _moveBackward = KeyCode.S;
     private KeyCode _moveLeft = KeyCode.A;
     private KeyCode _moveRight = KeyCode.D;
-    private KeyCode _shoot = KeyCode.M;
+    private KeyCode _shoot = KeyCode.Mouse0;
     private KeyCode _reload = KeyCode.R;
     private KeyCode _switchPistol = KeyCode.Alpha1;
     private KeyCode _switchUzi = KeyCode.Alpha2;

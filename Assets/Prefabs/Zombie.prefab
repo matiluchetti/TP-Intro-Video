@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2757750449110225456}
   - component: {fileID: 9093150962565174836}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 6708400509388078878}
   - component: {fileID: 3449436265606608206}
   - component: {fileID: 7200413486441630278}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 6485118952270553524}
   - component: {fileID: 8519181335141328626}
   - component: {fileID: 958769445864590183}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,8 @@ GameObject:
   - component: {fileID: 951209828795012706}
   - component: {fileID: 5334969671480529904}
   - component: {fileID: 7652580307645840092}
-  m_Layer: 0
+  - component: {fileID: 3012663720402949352}
+  m_Layer: 8
   m_Name: Zombie
   m_TagString: Respawn
   m_Icon: {fileID: 0}
@@ -313,7 +314,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 2
+  speed: 10
+  _maxLife: 100
 --- !u!54 &7652580307645840092
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -336,11 +338,34 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!136 &3012663720402949352
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3065291922127994728}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3562124554827897065
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +378,7 @@ GameObject:
   - component: {fileID: 5803830976927658670}
   - component: {fileID: 6199491618856629806}
   - component: {fileID: 8915094263255293988}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -461,7 +486,7 @@ GameObject:
   - component: {fileID: 6041857699598973990}
   - component: {fileID: 6598275495916494353}
   - component: {fileID: 3198691521514372699}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,7 +594,7 @@ GameObject:
   - component: {fileID: 8800206241079833075}
   - component: {fileID: 4325027543721724703}
   - component: {fileID: 3308336488883100773}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -678,7 +703,7 @@ GameObject:
   - component: {fileID: 7250835846330421391}
   - component: {fileID: 9159787822474154184}
   - component: {fileID: 1578147169360083878}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Skull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
