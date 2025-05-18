@@ -8,8 +8,14 @@ public class Gun : MonoBehaviour, IGun
     #region GUN_PROPERTIES
     private int _damage = 10;
     private int _maxBulletCount = 10;
-    [SerializeField] private int _currentBulletCount;
+    [SerializeField] protected int _currentBulletCount;
     [SerializeField] private GameObject _bulletPrefab;
+    [SerializeField] protected AudioClip _shotClip; // Clip de sonido a asignar en el Inspector
+    
+    #endregion
+
+    #region COMPONENTS
+    protected AudioSource _audioSource;
     #endregion
 
     #region I_GUN_PROPERTIES
@@ -18,12 +24,32 @@ public class Gun : MonoBehaviour, IGun
     public GameObject BulletPrefab => _bulletPrefab;
     #endregion
 
-    #region I_GUN_PROPERTIES
-    public virtual void Attack() => Instantiate(
-                                        _bulletPrefab, 
-                                        transform.position, 
-                                        transform.rotation);
+    public AudioClip ShotClip => _shotClip;
 
-    public virtual void Reload() => _currentBulletCount = _maxBulletCount;
-    #endregion
+    private void Start()
+    {
+        _audioSource = GetComponent<AudioSource>();
+
+        if (_audioSource == null)
+        {
+            Debug.LogWarning($"No AudioSource found on {gameObject.name}, adding one.");
+            _audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
+    public virtual void Attack()
+    {
+        Instantiate(_bulletPrefab, transform.position, transform.rotation);
+
+        if (_shotClip != null && _audioSource != null)
+        {
+            Debug.Log($"Disparo ejecutado. Clip asignado: {_shotClip != null}, AudioSource: {_audioSource != null}");
+            _audioSource.PlayOneShot(_shotClip);
+        }
+    }
+
+    public virtual void Reload()
+    {
+        _currentBulletCount = _maxBulletCount;
+    }
 }
