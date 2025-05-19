@@ -7,21 +7,25 @@ public class ZombieAI : MonoBehaviour, IDamagable
     public Transform target;
     public float speed = 2f;
 
-
     [SerializeField] private float _maxLife = 100f;
     private float _currentLife;
+    private float _damage = 10f;
 
     public float Life => _currentLife;
     public float MaxLife => _maxLife;
+
     private bool isBeingPushedBack = false;
     private float originalSpeed;
     private Rigidbody _rb;
+
+    public System.Action onDeath;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         _currentLife = _maxLife;
+
         if (player != null)
         {
             target = player.transform;
@@ -36,12 +40,10 @@ public class ZombieAI : MonoBehaviour, IDamagable
         direction.y = 0f; 
         direction.Normalize();
 
-        // Moverse hacia el jugador
         Vector3 newPos = _rb.position + direction * speed * Time.fixedDeltaTime;
         newPos.y = 0f;
         _rb.MovePosition(newPos);
 
-        // Girar solo en eje Y
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
@@ -49,7 +51,6 @@ public class ZombieAI : MonoBehaviour, IDamagable
         }
     }
 
-    // Implementación de daño
     public void TakeDamage(int amount)
     {
         _currentLife -= amount;
@@ -59,7 +60,8 @@ public class ZombieAI : MonoBehaviour, IDamagable
         {
             Die();
         }
-        else{
+        else
+        {
             Vector3 pushDir = -transform.forward;
             StartCoroutine(PushBack(pushDir * 10f, 0.3f));
         }
@@ -67,7 +69,7 @@ public class ZombieAI : MonoBehaviour, IDamagable
 
     private void Die()
     {
-        // Podés agregar animaciones o partículas acá
+        onDeath?.Invoke();
         Destroy(gameObject);
     }
 
@@ -76,16 +78,16 @@ public class ZombieAI : MonoBehaviour, IDamagable
         if (collision.gameObject.CompareTag("Player"))
         {
             IDamagable player = collision.gameObject.GetComponent<IDamagable>();
-            player?.TakeDamage(10); // Puedes ajustar el valor de daño
+            player?.TakeDamage(Mathf.RoundToInt(_damage));
 
-            // Empujar al zombie hacia atrás
             Vector3 pushDir = (transform.position - collision.transform.position).normalized;
             StartCoroutine(PushBack(pushDir * 10f, 0.3f));
         }
     }
+
     private IEnumerator PushBack(Vector3 pushVector, float duration)
     {
-        if (isBeingPushedBack) yield break; // Evita múltiples corrutinas superpuestas
+        if (isBeingPushedBack) yield break;
 
         isBeingPushedBack = true;
         originalSpeed = speed;
@@ -103,5 +105,11 @@ public class ZombieAI : MonoBehaviour, IDamagable
         isBeingPushedBack = false;
     }
 
-
+    public void SetStats(float life, float speed, float damage)
+    {
+        _maxLife = life;
+        _currentLife = _maxLife;
+        this.speed = speed;
+        this._damage = damage;
+    }
 }
