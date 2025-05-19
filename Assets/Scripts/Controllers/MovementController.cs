@@ -1,23 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Strategy;
+
+[RequireComponent(typeof(Rigidbody))]
 public class MovementController : MonoBehaviour, IMoveable
 {
-    #region IMOVEABLE_PROPERTIES
-    public float Speed => _speed;
     [SerializeField] private float _speed = 10;
-    #endregion
+    public float Speed => _speed;
 
-    #region IMOVEABLE_METHODS
+    private Rigidbody _rb;
+    private Vector3 _moveDirection = Vector3.zero;
+
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
+
     public void Move(Vector3 direction)
     {
-        transform.position += direction * Time.deltaTime * Speed;
+        // Acumula el movimiento para este frame
+        _moveDirection += direction.normalized;
     }
 
     public void RotateTowards(Vector3 point)
     {
         transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
     }
-    #endregion
+
+    private void FixedUpdate()
+    {
+        if (_moveDirection != Vector3.zero)
+        {
+            Vector3 newPos = _rb.position + _moveDirection.normalized * Speed * Time.fixedDeltaTime;
+            newPos.y = 0;
+            _rb.MovePosition(newPos);
+        }
+
+        _moveDirection = Vector3.zero; // Limpiar después de FixedUpdate
+    }
 }

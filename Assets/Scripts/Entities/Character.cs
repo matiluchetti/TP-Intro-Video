@@ -14,17 +14,25 @@ public class Character : MonoBehaviour, IDamagable
     private float _pushBackSpeed = 10f;
     private bool _inputBlocked = false;
 
+    private Rigidbody _rb;
+
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
+
     private void Start()
     {
         _currentLife = _maxLife;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_inputBlocked)
         {
-            transform.position += _pushBackOffset * Time.deltaTime * _pushBackSpeed;
-            _pushBackOffset = Vector3.Lerp(_pushBackOffset, Vector3.zero, Time.deltaTime * 5f);
+            Vector3 moveDelta = _pushBackOffset * Time.fixedDeltaTime * _pushBackSpeed;
+            _rb.MovePosition(_rb.position + moveDelta);
+            _pushBackOffset = Vector3.Lerp(_pushBackOffset, Vector3.zero, Time.fixedDeltaTime * 5f);
         }
     }
 
@@ -41,10 +49,9 @@ public class Character : MonoBehaviour, IDamagable
 
     private void Die()
     {
-        // Puedes agregar aquí animaciones, sonidos, efectos, etc.
         Debug.Log("Personaje murió.");
         EventManager.instance.EventGameOver(true);
-        Destroy(gameObject); // O alguna lógica de respawn o desactivación
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
