@@ -32,8 +32,8 @@ public class Bullet : MonoBehaviour, IBullet
         {
             IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
             damagable?.TakeDamage(Damage);
-
         }
+
         
             Destroy(this.gameObject);
     }
@@ -49,7 +49,7 @@ public class Bullet : MonoBehaviour, IBullet
     void Update()
     {
         Travel();
-
+        Debug.DrawRay(transform.position, transform.forward * 2f, Color.green);
         _timeRemaining -= Time.deltaTime;
         if (_timeRemaining <= 0) Destroy(this.gameObject);
     }

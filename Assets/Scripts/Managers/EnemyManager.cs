@@ -5,8 +5,9 @@ using System.Collections;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject devilPrefab;
     [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private int enemiesPerWave = 10;
+    [SerializeField] private int enemiesPerWave = 1;
     [SerializeField] private float timeBetweenWaves = 5f;
 
     private List<GameObject> activeEnemies = new List<GameObject>();
@@ -21,10 +22,8 @@ public class EnemyManager : MonoBehaviour
 
     void Update()
     {
-        // Limpia enemigos nulos (ya destruidos)
         activeEnemies.RemoveAll(enemy => enemy == null);
 
-        // Si no quedan enemigos vivos y no estamos esperando, inicia nueva oleada
         if (activeEnemies.Count == 0 && !isWaitingForNextWave && currentWave < TOTAL_WAVES)
         {
             StartCoroutine(WaitForNextWave());
@@ -46,6 +45,12 @@ public class EnemyManager : MonoBehaviour
         if (currentWave <= TOTAL_WAVES)
         {
             SpawnWave();
+
+            if (currentWave % 1 == 0)
+            {
+                SpawnDevil();
+            }
+
             Debug.Log($"Iniciando oleada {currentWave} de {TOTAL_WAVES}");
         }
         else
@@ -64,25 +69,47 @@ public class EnemyManager : MonoBehaviour
             Transform spawnPoint = availableSpawns[index];
             GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
             
-            // Aplicar modificadores de dificultad basados en la oleada actual
             ZombieAI zombieComponent = enemy.GetComponent<ZombieAI>();
             if (zombieComponent != null)
             {
-                float waveMultiplier = 1f + ((currentWave - 1) * 0.1f); // Aumenta 0.1 por oleada
-                float baseLife = 100f; // Vida base del zombie
-                float baseSpeed = 8f; // Velocidad base del zombie
-                float baseDamage = 10f; // Daño base del zombie
+                float waveMultiplier = 1f + ((currentWave - 1) * 0.1f);
+                float baseLife = 100f;
+                float baseSpeed = 8f;
+                float baseDamage = 10f;
 
-                // Usar SetStats para modificar todas las estadísticas del zombie
                 zombieComponent.SetStats(
-                    baseLife * waveMultiplier, // Vida aumentada por oleada
-                    baseSpeed + ((currentWave - 1) * 0.1f), // Velocidad aumentada por oleada
-                    baseDamage * waveMultiplier // Daño aumentado por oleada
+                    baseLife * waveMultiplier,
+                    baseSpeed + ((currentWave - 1) * 0.1f),
+                    baseDamage * waveMultiplier
                 );
             }
 
             activeEnemies.Add(enemy);
             availableSpawns.RemoveAt(index);
         }
+    }
+
+
+    private void SpawnDevil()
+    {
+        if (spawnPoints.Length == 0 || devilPrefab == null) return;
+
+        int index = Random.Range(0, spawnPoints.Length);
+        Transform spawnPoint = spawnPoints[index];
+
+        GameObject devil = Instantiate(devilPrefab, spawnPoint.position, Quaternion.identity);
+
+        DevilAI devilComponent = devil.GetComponent<DevilAI>();
+        if (devilComponent != null)
+        {
+            devilComponent.SetStats(
+                300f + currentWave * 20f, // vida
+                10f + currentWave * 0.2f, // velocidad
+                50f + currentWave * 5f    // daño
+            );
+        }
+
+        activeEnemies.Add(devil);
+        Debug.Log("👹 ¡Ha aparecido un Devil!");
     }
 }

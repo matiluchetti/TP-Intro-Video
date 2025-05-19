@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8684835663775161569}
   - component: {fileID: 1083464354791640107}
   - component: {fileID: 6308626080864461498}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Skull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 4515648689881861242}
   - component: {fileID: 861399468027485310}
   - component: {fileID: 9028431792417391406}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,6 +216,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &862691285949522838
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6038357233394090310}
+  m_Layer: 8
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6038357233394090310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862691285949522838}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.1389065, z: 2.07}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 794835614405532954}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1245736739955485560
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +259,7 @@ GameObject:
   - component: {fileID: 7444977326902530070}
   - component: {fileID: 88169230262675796}
   - component: {fileID: 5237176887613457858}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LHorn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +369,7 @@ GameObject:
   - component: {fileID: 715119639025096902}
   - component: {fileID: 9202672292977490326}
   - component: {fileID: 2462630404029092069}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -443,7 +474,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5262311748614079687}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -480,7 +511,7 @@ GameObject:
   - component: {fileID: 6027167439096223145}
   - component: {fileID: 7541035009043507383}
   - component: {fileID: 965293606655240627}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RHorn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -590,7 +621,7 @@ GameObject:
   - component: {fileID: 7022162659278975349}
   - component: {fileID: 8640657032712886985}
   - component: {fileID: 8685129806661767095}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -695,7 +726,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 794835614405532954}
-  m_Layer: 0
+  - component: {fileID: -5865220633372452638}
+  - component: {fileID: 6880487663394026486}
+  - component: {fileID: 6322672345506148711}
+  m_Layer: 8
   m_Name: Devil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -721,8 +755,80 @@ Transform:
   - {fileID: 6806598906612511892}
   - {fileID: 1997102023117924702}
   - {fileID: 528582101154182468}
+  - {fileID: 6038357233394090310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &-5865220633372452638
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4496399796256113339}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &6880487663394026486
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4496399796256113339}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &6322672345506148711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4496399796256113339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 485df90000d21c343868078d1f5b1c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 2
+  _maxLife: 300
+  bulletPrefab: {fileID: 6695184686978534684, guid: 3bcd1e432d1eb17438f714d9b4327d89, type: 3}
+  firePoint: {fileID: 6038357233394090310}
+  fireRate: 2
+  fireRange: 50
+  bulletSpreadRadius: 0
+  shotClip: {fileID: 0}
 --- !u!1 &4633647784974449799
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,7 +841,7 @@ GameObject:
   - component: {fileID: 5505367012638587502}
   - component: {fileID: 4062750567036626646}
   - component: {fileID: 8993785101912336536}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -843,7 +949,7 @@ GameObject:
   - component: {fileID: 1054408070468852559}
   - component: {fileID: 2857983051889897639}
   - component: {fileID: 2005013326868176745}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
