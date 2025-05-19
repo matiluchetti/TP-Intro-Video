@@ -24,6 +24,9 @@ public class LifeController : MonoBehaviour, IDamagable
     #region I_DAMAGABLE_METHODS
     public void TakeDamage(int damage)
     {
+        Debug.Log("TakeDamage: " + damage);
+        Debug.Log("Life: " + _life);
+        Debug.Log("newLife: " + (_life - damage));
         _life -= damage;
         if (IsDead()) Die();
     }
@@ -35,7 +38,6 @@ public class LifeController : MonoBehaviour, IDamagable
     private void Die() 
     { 
         if(name == "Player") EventManager.instance.EventGameOver(false);
-
         Destroy(this.gameObject); 
     }
     #endregion

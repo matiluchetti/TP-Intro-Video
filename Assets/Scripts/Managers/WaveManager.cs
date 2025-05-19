@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 
-public class EnemyManager : MonoBehaviour
+public class WaveManager : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject devilPrefab;
@@ -24,9 +24,12 @@ public class EnemyManager : MonoBehaviour
     {
         activeEnemies.RemoveAll(enemy => enemy == null);
 
-        if (activeEnemies.Count == 0 && !isWaitingForNextWave && currentWave < TOTAL_WAVES)
-        {
-            StartCoroutine(WaitForNextWave());
+        if (activeEnemies.Count == 0 && !isWaitingForNextWave) {
+            if(currentWave < TOTAL_WAVES) {
+                StartCoroutine(WaitForNextWave());
+            } else {
+                EventManager.instance.EventGameOver(true);
+            }
         }
     }
 

@@ -68,7 +68,6 @@ public class CharacterInputManager : MonoBehaviour
         Vector3 backwardLeft = Vector3.Normalize(backward + left);
         Vector3 backwardRight = Vector3.Normalize(backward + right);
 
-    
         _cmdRotateTowardsMouse = new CmdRotateTowardsMouse(_player);
         // _cmdMoveBackward = new CmdMovement(backward, _player);
         // _cmdMoveForward = new CmdMovement(forward, _player);

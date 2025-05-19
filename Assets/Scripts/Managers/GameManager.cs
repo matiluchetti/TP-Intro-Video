@@ -7,20 +7,16 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private bool _isGameOver = false;
     [SerializeField] private bool _isVictory = false;
-    [SerializeField] private Text _gameoverMessage;
 
     private void Start()
     {
         EventManager.instance.OnGameOver += OnGameOver;
-        _gameoverMessage.text = string.Empty;
     }
 
     private void OnGameOver(bool isVictory)
     {
+        Debug.Log("GameManager: OnGameOver: " + isVictory);
         _isGameOver = true;
         _isVictory = isVictory;
-
-        _gameoverMessage.text = isVictory ? "Victoria" : "Derrota";
-        _gameoverMessage.color = isVictory ? Color.cyan : Color.red;
     }
 }

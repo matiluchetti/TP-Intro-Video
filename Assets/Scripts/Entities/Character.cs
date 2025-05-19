@@ -50,7 +50,7 @@ public class Character : MonoBehaviour, IDamagable
     private void Die()
     {
         Debug.Log("Personaje murió.");
-        EventManager.instance.EventGameOver(true);
+        EventManager.instance.EventGameOver(false);
         Destroy(gameObject);
     }
 
