@@ -26,6 +26,8 @@ public class Character : MonoBehaviour, IDamagable
     private void Start()
     {
         _currentLife = _maxLife;
+        EventManager.instance.EventLifeUpdate((int)_currentLife, (int)_maxLife); // Actualiza la vida en el GameManager
+
         StartCoroutine(RegenerateHealth());
 
     }
@@ -44,8 +46,7 @@ public class Character : MonoBehaviour, IDamagable
     {
         _currentLife -= amount;
         Debug.Log($"Character recibió {amount} de daño. Vida restante: {_currentLife}");
-
-        _currentLife -= amount;
+        EventManager.instance.EventLifeUpdate((int)_currentLife, (int)_maxLife); // Actualiza la vida en el GameManager
         OnPlayerDamaged?.Invoke(amount); // Dispara el evento
 
         if (_currentLife <= 0)
@@ -86,7 +87,12 @@ public class Character : MonoBehaviour, IDamagable
         yield return new WaitForSeconds(1f);
         if (_currentLife < _maxLife)
         {
+            
             _currentLife = Mathf.Min(_currentLife + 1, _maxLife);
+            if (_currentLife != _maxLife)
+            {
+                EventManager.instance.EventLifeUpdate((int)_currentLife, (int)_maxLife); // Actualiza la vida en el GameManager
+            }
         }
     }
 }

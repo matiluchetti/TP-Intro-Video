@@ -53,6 +53,8 @@ public class WaveManager : MonoBehaviour
         if (currentWave <= TOTAL_WAVES)
         {
             SpawnWave();
+            EventManager.instance.EventRoundUpdate(currentWave); // Actualiza la oleada en el GameManager
+
 
             if (currentWave % 2 == 0)
             {

@@ -218,6 +218,7 @@ public class CharacterInputManager : MonoBehaviour
             weapon.gameObject.SetActive(false);
         }
 
+        EventManager.instance.EventGunUpdate(_weapons[weaponIndex]);
 
         Gun gun = _weapons[weaponIndex];
         gun.gameObject.SetActive(true);

@@ -23,4 +23,32 @@ public class EventManager : MonoBehaviour
         if (OnGameOver != null) OnGameOver(isVictory);
     }
     #endregion
+
+    #region DAMAGEABLES
+    public event Action<int,int> OnLifeUpdate;
+
+    public void EventLifeUpdate(int currentLife, int maxLife)
+    {
+        if (OnLifeUpdate != null) OnLifeUpdate(currentLife, maxLife);
+    }
+    #endregion
+
+    #region GUN
+    public event Action<Gun> OnGunUpdate;
+    public void EventGunUpdate(Gun gun)
+    {
+        if (OnGunUpdate != null) OnGunUpdate(gun);
+    }
+    #endregion
+
+    #region ROUND
+
+    public event Action<int> OnRoundUpdate;
+
+    public void EventRoundUpdate(int round)
+    {
+        if (OnRoundUpdate != null) OnRoundUpdate(round);
+    }
+    #endregion
+
 }
