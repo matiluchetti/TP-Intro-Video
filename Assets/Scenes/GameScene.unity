@@ -853,7 +853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbaa6e420f346604280601ce721b4a11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotCooldown: 500
+  shotCooldown: 250
   camTarget: {fileID: 730756114}
   camPLerp: 0.2
   camRLerp: 0.2

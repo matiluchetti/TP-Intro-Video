@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Commands;
 using Strategy;
 using UnityEngine;
+using Managers;
 
 public enum WeaponIndex
 {
@@ -69,14 +70,14 @@ public class CharacterInputManager : MonoBehaviour
         Vector3 backwardRight = Vector3.Normalize(backward + right);
 
         _cmdRotateTowardsMouse = new CmdRotateTowardsMouse(_player);
-        // _cmdMoveBackward = new CmdMovement(backward, _player);
-        // _cmdMoveForward = new CmdMovement(forward, _player);
-        // _cmdMoveLeft = new CmdMovement(left, _player);
-        // _cmdMoveRight = new CmdMovement(right, _player);
-        // _cmdMoveForwardLeft = new CmdMovement(forwardLeft, _player);
-        // _cmdMoveForwardRight = new CmdMovement(forwardRight, _player);
-        // _cmdMoveBackwardLeft = new CmdMovement(backwardLeft, _player);
-        // _cmdMoveBackwardRight = new CmdMovement(backwardRight, _player);
+        _cmdMoveBackward = new CmdMovement(backward, _player);
+        _cmdMoveForward = new CmdMovement(forward, _player);
+        _cmdMoveLeft = new CmdMovement(left, _player);
+        _cmdMoveRight = new CmdMovement(right, _player);
+        _cmdMoveForwardLeft = new CmdMovement(forwardLeft, _player);
+        _cmdMoveForwardRight = new CmdMovement(forwardRight, _player);
+        _cmdMoveBackwardLeft = new CmdMovement(backwardLeft, _player);
+        _cmdMoveBackwardRight = new CmdMovement(backwardRight, _player);
 
         _cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
@@ -88,22 +89,44 @@ public class CharacterInputManager : MonoBehaviour
         // Rotación cámara
         _turn.x += Input.GetAxis("Mouse X") * mouseSensitivity;
         transform.localRotation = Quaternion.Euler(-_turn.y, _turn.x, 0);
+        bool isUzi = _currentWeapon is Machingun; 
 
-        // Disparo
+
+        // Disparo con cooldown para otras armas
         if (Input.GetKeyDown(_shoot) && _shotCooldownTimer >= shotCooldown)
         {
-            _cmdShoot.Execute();
+            EventQueueManager.instance.AddEvent(_cmdShoot);
             _shotCooldownTimer = 0;
         }
         else
         {
+            if (isUzi)
+            {
+                _shotCooldownTimer += (int)(Time.deltaTime * 500);;
+            }
+            else
+            {
+                _shotCooldownTimer += (int)(Time.deltaTime * 1000);
+            }
+        }
+        
+        // Disparo
+
+        if (Input.GetKeyDown(_shoot) && (isUzi || _shotCooldownTimer >= shotCooldown))
+        {
+            EventQueueManager.instance.AddEvent(_cmdShoot);
+            _shotCooldownTimer = 0;
+        }
+        else if (!isUzi)
+        {
             _shotCooldownTimer += (int)(Time.deltaTime * 1000);
         }
+
 
         // Recarga
         if (Input.GetKeyDown(_reload))
         {
-            _cmdReload.Execute();
+            EventQueueManager.instance.AddEvent(_cmdReload);
         }
 
         // Cambiar de arma
@@ -123,7 +146,7 @@ public class CharacterInputManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _cmdRotateTowardsMouse.Do();
+        EventQueueManager.instance.AddEvent(_cmdRotateTowardsMouse);
 
         // Direcciones actualizadas en tiempo real según rotación del personaje
         Vector3 forward = transform.forward;
@@ -139,25 +162,25 @@ public class CharacterInputManager : MonoBehaviour
         if (Input.GetKey(_moveForward))
         {
             if (Input.GetKey(_moveLeft))
-                new CmdMovement(forwardLeft, _player).Do();
+                EventQueueManager.instance.AddEvent(_cmdMoveForwardLeft);
             else if (Input.GetKey(_moveRight))
-                new CmdMovement(forwardRight, _player).Do();
+                EventQueueManager.instance.AddEvent(_cmdMoveForwardRight);
             else
-                new CmdMovement(forward, _player).Do();
+                EventQueueManager.instance.AddEvent(_cmdMoveForward);
         }
         else if (Input.GetKey(_moveBackward))
         {
             if (Input.GetKey(_moveLeft))
-                new CmdMovement(backwardLeft, _player).Do();
+                EventQueueManager.instance.AddEvent(_cmdMoveBackwardLeft);
             else if (Input.GetKey(_moveRight))
-                new CmdMovement(backwardRight, _player).Do();
+                EventQueueManager.instance.AddEvent(_cmdMoveBackwardRight);
             else
-                new CmdMovement(backward, _player).Do();
+                EventQueueManager.instance.AddEvent(_cmdMoveBackward);
         }
         else if (Input.GetKey(_moveLeft))
-            new CmdMovement(left, _player).Do();
+                EventQueueManager.instance.AddEvent(_cmdMoveLeft);
         else if (Input.GetKey(_moveRight))
-            new CmdMovement(right, _player).Do();
+                EventQueueManager.instance.AddEvent(_cmdMoveRight);
         }
 
 
@@ -167,6 +190,9 @@ public class CharacterInputManager : MonoBehaviour
         _cameraTransform.position = Vector3.Lerp(_cameraTransform.position, camTarget.position, camPLerp);
         _cameraTransform.rotation = Quaternion.Lerp(_cameraTransform.rotation, camTarget.rotation, camRLerp);
     }
+
+    
+
 
     private void SwitchWeapon(int weaponIndex)
     {
@@ -180,6 +206,7 @@ public class CharacterInputManager : MonoBehaviour
         {
             weapon.gameObject.SetActive(false);
         }
+
 
         Gun gun = _weapons[weaponIndex];
         gun.gameObject.SetActive(true);

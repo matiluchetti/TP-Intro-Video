@@ -18,7 +18,7 @@ public class Shotgun : Gun
             }
             return;
         }
-        for (int i = 0; i < _shotCount; i++)
+        for (int i = 0; i < _shotCount && _currentBulletCount > 0; i++)
         {
             if (_currentBulletCount <= 0)
             {

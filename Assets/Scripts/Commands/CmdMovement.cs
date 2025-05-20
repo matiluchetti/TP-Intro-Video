@@ -2,7 +2,7 @@ using UnityEngine;
 using Strategy;
 namespace Commands
 {
-    public class CmdMovement
+    public class CmdMovement: ICommand
     {
         private Vector3 _direction;
         private IMoveable _player;
@@ -13,7 +13,7 @@ namespace Commands
             _player = player;
         }
 
-        public void Do()
+        public void Execute()
         {
             _player.Move(_direction);
         }

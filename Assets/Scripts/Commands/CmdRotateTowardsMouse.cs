@@ -3,7 +3,7 @@ using Strategy;
 
 namespace Commands
 {
-    public class CmdRotateTowardsMouse
+    public class CmdRotateTowardsMouse : ICommand
     {
         private IMoveable _player;
 
@@ -12,7 +12,7 @@ namespace Commands
             _player = player;
         }
 
-        public void Do()
+        public void Execute()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             // Usar la altura actual del personaje
