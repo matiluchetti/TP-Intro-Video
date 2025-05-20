@@ -14,6 +14,8 @@ public class WaveManager : MonoBehaviour
     private int currentWave = 0;
     private const int TOTAL_WAVES = 10;
     private bool isWaitingForNextWave = false;
+    public static event System.Action OnWaveEnded;
+
 
     void Start()
     {
@@ -36,6 +38,9 @@ public class WaveManager : MonoBehaviour
     private IEnumerator WaitForNextWave()
     {
         isWaitingForNextWave = true;
+        Debug.Log("Invocando OnWaveEnded. Suscriptores: " + (OnWaveEnded?.GetInvocationList()?.Length ?? 0));
+  
+        OnWaveEnded?.Invoke(); // <-- Agregá esta línea
         Debug.Log($"Esperando {timeBetweenWaves} segundos para la siguiente oleada...");
         yield return new WaitForSeconds(timeBetweenWaves);
         isWaitingForNextWave = false;

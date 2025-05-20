@@ -15,6 +15,8 @@ public class Character : MonoBehaviour, IDamagable
     private bool _inputBlocked = false;
 
     private Rigidbody _rb;
+    public static event System.Action<float> OnPlayerDamaged;
+
 
     private void Awake()
     {
@@ -40,6 +42,9 @@ public class Character : MonoBehaviour, IDamagable
     {
         _currentLife -= amount;
         Debug.Log($"Character recibió {amount} de daño. Vida restante: {_currentLife}");
+
+        _currentLife -= amount;
+        OnPlayerDamaged?.Invoke(amount); // Dispara el evento
 
         if (_currentLife <= 0)
         {
