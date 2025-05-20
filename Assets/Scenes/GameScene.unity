@@ -613,7 +613,7 @@ MonoBehaviour:
   - {fileID: 1802294457}
   - {fileID: 1118657921}
   - {fileID: 625779227}
-  enemiesPerWave: 1
+  enemiesPerWave: 10
   timeBetweenWaves: 5
 --- !u!4 &269252329
 Transform:

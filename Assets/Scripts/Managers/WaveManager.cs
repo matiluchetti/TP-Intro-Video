@@ -54,7 +54,7 @@ public class WaveManager : MonoBehaviour
         {
             SpawnWave();
 
-            if (currentWave % 1 == 0)
+            if (currentWave % 2 == 0)
             {
                 SpawnDevil();
             }
