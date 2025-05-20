@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7320921973564441792}
+  - component: {fileID: 962662138453847872}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
@@ -33,6 +34,23 @@ Transform:
   - {fileID: 807729831940899549}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &962662138453847872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6769046689154123991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bdf51e2b0f33b8439a323cf67e614e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentBulletCount: 10
+  _bulletPrefab: {fileID: 2444335039650728946, guid: d7976b14d8ea0ee429af8763f2f5c655, type: 3}
+  _shotClip: {fileID: 8300000, guid: 8fcb7adadd247e74dbab440a5734a4a3, type: 3}
+  _gunSprite: {fileID: 21300000, guid: 1406767b68e659d4894c7e19bc316d04, type: 3}
+  _emptyClip: {fileID: 8300000, guid: c17e2154bbb54124f927f207b997f849, type: 3}
 --- !u!1 &6946705362870902035
 GameObject:
   m_ObjectHideFlags: 0

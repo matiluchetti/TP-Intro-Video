@@ -7,10 +7,11 @@ public class Gun : MonoBehaviour, IGun
 {
     #region GUN_PROPERTIES
     private int _damage = 10;
-    private int _maxBulletCount = 10;
+    protected int _maxBulletCount = 30;
     [SerializeField] protected int _currentBulletCount;
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] protected AudioClip _shotClip; // Clip de sonido a asignar en el Inspector
+    [SerializeField] private Sprite _gunSprite; // Sprite de la pistola a asignar en el Inspector
     
     #endregion
 
@@ -22,6 +23,8 @@ public class Gun : MonoBehaviour, IGun
     public int Damage => _damage;
     public int MaxBulletCount => _maxBulletCount;
     public GameObject BulletPrefab => _bulletPrefab;
+    public Sprite GunSprite => _gunSprite;
+    public int CurrentBullets => _currentBulletCount;
     #endregion
 
     public AudioClip ShotClip => _shotClip;
@@ -51,5 +54,6 @@ public class Gun : MonoBehaviour, IGun
     public virtual void Reload()
     {
         _currentBulletCount = _maxBulletCount;
+        EventManager.instance.EventGunUpdate(this);
     }
 }

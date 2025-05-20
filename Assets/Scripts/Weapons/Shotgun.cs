@@ -36,6 +36,8 @@ public class Shotgun : Gun
 
         }
 
+        EventManager.instance.EventGunUpdate(this); // Actualiza el UI
+
         if (_shotClip != null && _audioSource != null)
         {
             Debug.Log($"Disparo ejecutado. Clip asignado: {_shotClip != null}, AudioSource: {_audioSource != null}");

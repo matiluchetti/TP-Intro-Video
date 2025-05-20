@@ -7,6 +7,11 @@ public class Machingun : Gun
     [SerializeField] private int _shotCount = 5;
     [SerializeField] private AudioClip _emptyClip;
 
+    public Machingun()
+    {
+        _maxBulletCount = 60; // Cambia el valor al crear la instancia
+    }
+
     public override void Attack()
     {
         if (_currentBulletCount <= 0)
@@ -31,12 +36,13 @@ public class Machingun : Gun
 
             Instantiate(
                 BulletPrefab,
-                transform.position + Vector3.forward * i * 0.6f,
-                Quaternion.identity);
+                transform.position + transform.forward * i * 0.6f ,
+                transform.rotation);
 
             _currentBulletCount--;
             actualShotsFired++;
         }
+        EventManager.instance.EventGunUpdate(this); // Actualiza el UI
 
         if (actualShotsFired > 0 && _shotClip != null && _audioSource != null)
         {

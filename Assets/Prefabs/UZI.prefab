@@ -333,6 +333,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8282348425266949567}
+  - component: {fileID: -420996004509201602}
   m_Layer: 0
   m_Name: UZI
   m_TagString: Untagged
@@ -358,3 +359,21 @@ Transform:
   - {fileID: 7986104085422670121}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-420996004509201602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9213609892079267095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9adec2e763baa443a8162baf7d82220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentBulletCount: 30
+  _bulletPrefab: {fileID: 2444335039650728946, guid: d7976b14d8ea0ee429af8763f2f5c655, type: 3}
+  _shotClip: {fileID: 8300000, guid: 8cb6eecf145bdab4b9862f58085b1d09, type: 3}
+  _gunSprite: {fileID: 21300000, guid: 66f5a8d91444d6247a8732a9e6251f26, type: 3}
+  _shotCount: 5
+  _emptyClip: {fileID: 8300000, guid: c17e2154bbb54124f927f207b997f849, type: 3}
