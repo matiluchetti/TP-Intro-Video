@@ -26,6 +26,8 @@ public class Character : MonoBehaviour, IDamagable
     private void Start()
     {
         _currentLife = _maxLife;
+        StartCoroutine(RegenerateHealth());
+
     }
 
     private void FixedUpdate()
@@ -76,4 +78,16 @@ public class Character : MonoBehaviour, IDamagable
         _inputBlocked = false;
         _pushBackOffset = Vector3.zero;
     }
+
+    private IEnumerator RegenerateHealth()
+{
+    while (_currentLife > 0)
+    {
+        yield return new WaitForSeconds(1f);
+        if (_currentLife < _maxLife)
+        {
+            _currentLife = Mathf.Min(_currentLife + 1, _maxLife);
+        }
+    }
+}
 }
