@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 15cfa59f0d25b4de2bc074f2065bd619
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _victoryClip: {fileID: 8300000, guid: c53bb0453172545d4ad6b9e1492e1e69, type: 3}
+  - _defeatClip: {fileID: 8300000, guid: 2a6c3a9c423a2409d92bf7ee93502ec0, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
