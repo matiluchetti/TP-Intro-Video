@@ -26,7 +26,7 @@ public class WaveManager : MonoBehaviour
     {
         activeEnemies.RemoveAll(enemy => enemy == null);
 
-        if (activeEnemies.Count == 0 && !isWaitingForNextWave) {
+        if (!GameState.IsGameOver && activeEnemies.Count == 0 && !isWaitingForNextWave) {
             if(currentWave < TOTAL_WAVES) {
                 StartCoroutine(WaitForNextWave());
             } else {

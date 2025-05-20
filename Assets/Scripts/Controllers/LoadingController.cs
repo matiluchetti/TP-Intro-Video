@@ -14,7 +14,9 @@ public class LoadingController : MonoBehaviour {
   IEnumerator LoadSceneAsync(int sceneId) {
     AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId);
 
-    LoadingScreen.SetActive(true);
+    if (LoadingScreen != null) {
+      LoadingScreen.SetActive(true);
+    }
 
     while (!operation.isDone) {
       float progress = Mathf.Clamp01(operation.progress / .9f);

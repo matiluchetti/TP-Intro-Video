@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private bool _isGameOver = false;
-    [SerializeField] private bool _isVictory = false;
+    [SerializeField] private LoadingController _loadingController;
 
     private void Start()
     {
@@ -16,7 +15,16 @@ public class GameManager : MonoBehaviour
     private void OnGameOver(bool isVictory)
     {
         Debug.Log("GameManager: OnGameOver: " + isVictory);
-        _isGameOver = true;
-        _isVictory = isVictory;
+        GameState.IsVictory = isVictory;
+        GameState.IsGameOver = true;
+        
+        if (_loadingController != null)
+        {
+            _loadingController.LoadScene(2);
+        }
+        else
+        {
+            Debug.LogError("LoadingController reference is missing in GameManager!");
+        }
     }
 }

@@ -159,6 +159,17 @@ public class CharacterInputManager : MonoBehaviour
         Vector3 backwardLeft = Vector3.Normalize(backward + left);
         Vector3 backwardRight = Vector3.Normalize(backward + right);
 
+        if (Input.GetKey(KeyCode.Alpha4))
+        {
+            Debug.Log("bFixedUpdate");
+            EventManager.instance.EventGameOver(false);
+        }
+        else if (Input.GetKey(KeyCode.Alpha5))
+        {
+            Debug.Log("cFixedUpdate");
+            EventManager.instance.EventGameOver(true);
+        }
+
         if (Input.GetKey(_moveForward))
         {
             if (Input.GetKey(_moveLeft))
