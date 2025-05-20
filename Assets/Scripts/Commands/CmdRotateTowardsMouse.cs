@@ -15,7 +15,9 @@ namespace Commands
         public void Do()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane plane = new Plane(Vector3.up, Vector3.zero);
+            // Usar la altura actual del personaje
+            float y = (_player as MonoBehaviour).transform.position.y;
+            Plane plane = new Plane(Vector3.up, new Vector3(0, y, 0));
 
             if (plane.Raycast(ray, out float distance))
             {

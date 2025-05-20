@@ -23,7 +23,13 @@ public class MovementController : MonoBehaviour, IMoveable
 
     public void RotateTowards(Vector3 point)
     {
-        transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
+        Vector3 direction = (point - transform.position);
+        direction.y = 0; // Mantener solo la rotación en el plano XZ
+        if (direction.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = targetRotation;
+        }
     }
 
     private void FixedUpdate()

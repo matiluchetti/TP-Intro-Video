@@ -101,7 +101,7 @@ public class WaveManager : MonoBehaviour
         Transform spawnPoint = spawnPoints[index];
 
         GameObject devil = Instantiate(devilPrefab, spawnPoint.position, Quaternion.identity);
-
+        devil.transform.position = new Vector3(devil.transform.position.x, 1f, devil.transform.position.z); // fuerza Y=1
         DevilAI devilComponent = devil.GetComponent<DevilAI>();
         if (devilComponent != null)
         {

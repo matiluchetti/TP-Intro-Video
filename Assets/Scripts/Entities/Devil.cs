@@ -46,25 +46,46 @@ public class DevilAI : MonoBehaviour, IDamagable
         }
     }
 
+
+    void Awake()
+    {
+        if (target == null)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+                target = player.transform;
+        }
+    }
+
     void FixedUpdate()
     {
         if (target == null) return;
 
-        Vector3 direction = (target.position - transform.position);
-        direction.y = 0f;
+        // Igualar la altura para evitar inclinaciones
+        Vector3 targetPos = target.position;
+        targetPos.y = transform.position.y;
+
+        Vector3 direction = (targetPos - transform.position);
+        float distance = direction.magnitude;
         direction.Normalize();
 
-        Vector3 newPos = _rb.position + direction * speed * Time.fixedDeltaTime;
-        _rb.MovePosition(newPos);
+        float stopDistance = 1.5f; // Ajustá según tu juego
+        if (distance > stopDistance)
+        {
+            Vector3 newPos = _rb.position + direction * speed * Time.fixedDeltaTime;
+            _rb.MovePosition(newPos);
+        }
 
-        if (direction != Vector3.zero)
+        if (direction.sqrMagnitude > 0.001f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-            _rb.MoveRotation(Quaternion.RotateTowards(_rb.rotation, targetRotation, 360f * Time.fixedDeltaTime));
+            _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, 0.15f));
         }
 
         TryShoot();
     }
+
+
 
     private void TryShoot()
     {
@@ -81,17 +102,20 @@ public class DevilAI : MonoBehaviour, IDamagable
 
 private void Shoot()
 {
-    Vector3 direction = (target.position - firePoint.position).normalized;
+    // Igualar la altura para disparar en el plano XZ
+    Vector3 targetPos = target.position;
+    targetPos.y = firePoint.position.y;
+
+    Vector3 direction = (targetPos - firePoint.position).normalized;
     Quaternion bulletRotation = Quaternion.LookRotation(direction);
     GameObject bullet = Instantiate(bulletPrefab, firePoint.position, bulletRotation);
-
 
     if (shotClip != null && _audioSource != null)
     {
         _audioSource.PlayOneShot(shotClip);
     }
 
-    Debug.Log("Devil disparó");
+    Debug.Log($"Devil disparó. Dirección: {direction}, Rotación: {bulletRotation.eulerAngles}");
 }
 
 
