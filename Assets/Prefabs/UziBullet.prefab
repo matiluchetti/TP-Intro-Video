@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4338667189655867878}
   - component: {fileID: 1605978469676125564}
   - component: {fileID: 4977724484887076078}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: UziBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

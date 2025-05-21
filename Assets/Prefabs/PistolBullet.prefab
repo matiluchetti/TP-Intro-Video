@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8980071432782542844}
   - component: {fileID: -1948868721042812790}
   - component: {fileID: 8375600131654720752}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PistolBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
