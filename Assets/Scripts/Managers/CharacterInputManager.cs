@@ -28,6 +28,16 @@ public class CharacterInputManager : MonoBehaviour
     private KeyCode _switchUzi = KeyCode.Alpha2;
     private KeyCode _switchShotgun = KeyCode.Alpha3;
 
+    Vector3 backward;
+    Vector3 forward;
+    Vector3 left;
+    Vector3 right;
+    Vector3 forwardLeft;
+    Vector3 forwardRight;
+    Vector3 backwardLeft;
+    Vector3 backwardRight;
+
+
     private CmdRotateTowardsMouse _cmdRotateTowardsMouse;
     private CmdMovement _cmdMoveForward;
     private CmdMovement _cmdMoveBackward;
@@ -58,30 +68,11 @@ public class CharacterInputManager : MonoBehaviour
         _player = GetComponent<IMoveable>();
         _weapons = new List<Gun>(GetComponentsInChildren<Gun>(true));
         SwitchWeapon((int)WeaponIndex.Pistol);
-
-        Quaternion rotation = Quaternion.AngleAxis(-45, Vector3.up);
-        Vector3 backward = rotation * transform.forward * -1;
-        Vector3 forward = rotation * transform.forward;
-        Vector3 left = rotation * transform.right * -1;
-        Vector3 right = rotation * transform.right;
-        Vector3 forwardLeft = Vector3.Normalize(forward + left);
-        Vector3 forwardRight = Vector3.Normalize(forward + right);
-        Vector3 backwardLeft = Vector3.Normalize(backward + left);
-        Vector3 backwardRight = Vector3.Normalize(backward + right);
-
-        _cmdRotateTowardsMouse = new CmdRotateTowardsMouse(_player);
-        _cmdMoveBackward = new CmdMovement(backward, _player);
-        _cmdMoveForward = new CmdMovement(forward, _player);
-        _cmdMoveLeft = new CmdMovement(left, _player);
-        _cmdMoveRight = new CmdMovement(right, _player);
-        _cmdMoveForwardLeft = new CmdMovement(forwardLeft, _player);
-        _cmdMoveForwardRight = new CmdMovement(forwardRight, _player);
-        _cmdMoveBackwardLeft = new CmdMovement(backwardLeft, _player);
-        _cmdMoveBackwardRight = new CmdMovement(backwardRight, _player);
-
+        CalculateDirections();
         _cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
+        _cmdRotateTowardsMouse = new CmdRotateTowardsMouse(_player);
     }
 
     void Update()
@@ -146,54 +137,47 @@ public class CharacterInputManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        EventQueueManager.instance.AddEvent(_cmdRotateTowardsMouse);
+     // hace que se fije si se movio el mouse
+        if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0.01f || Mathf.Abs(Input.GetAxis("Mouse Y")) > 0.01f)
+        {
+            EventQueueManager.instance.AddEvent(_cmdRotateTowardsMouse);
+            Debug.Log("Front is " + transform.forward);
+            Debug.Log("Right is " + transform.right);
+            CalculateDirections();
+        }
+
+
 
         // Direcciones actualizadas en tiempo real según rotación del personaje
-        Vector3 forward = transform.forward;
-        Vector3 right = transform.right;
-        Vector3 backward = -forward;
-        Vector3 left = -right;
 
-        Vector3 forwardLeft = Vector3.Normalize(forward + left);
-        Vector3 forwardRight = Vector3.Normalize(forward + right);
-        Vector3 backwardLeft = Vector3.Normalize(backward + left);
-        Vector3 backwardRight = Vector3.Normalize(backward + right);
 
-        if (Input.GetKey(KeyCode.Alpha4))
-        {
-            Debug.Log("bFixedUpdate");
-            EventManager.instance.EventGameOver(false);
-        }
-        else if (Input.GetKey(KeyCode.Alpha5))
-        {
-            Debug.Log("cFixedUpdate");
-            EventManager.instance.EventGameOver(true);
-        }
 
         if (Input.GetKey(_moveForward))
         {
             if (Input.GetKey(_moveLeft))
-                EventQueueManager.instance.AddEvent(_cmdMoveForwardLeft);
+                EventQueueManager.instance.AddEvent(new CmdMovement(forwardLeft, _player));
             else if (Input.GetKey(_moveRight))
-                EventQueueManager.instance.AddEvent(_cmdMoveForwardRight);
+                EventQueueManager.instance.AddEvent(new CmdMovement(forwardRight, _player));
             else
-                EventQueueManager.instance.AddEvent(_cmdMoveForward);
+
+                EventQueueManager.instance.AddEvent(new CmdMovement(forward, _player));
         }
         else if (Input.GetKey(_moveBackward))
         {
             if (Input.GetKey(_moveLeft))
-                EventQueueManager.instance.AddEvent(_cmdMoveBackwardLeft);
+                EventQueueManager.instance.AddEvent(new CmdMovement(backwardLeft, _player));
             else if (Input.GetKey(_moveRight))
-                EventQueueManager.instance.AddEvent(_cmdMoveBackwardRight);
-            else
-                EventQueueManager.instance.AddEvent(_cmdMoveBackward);
+                EventQueueManager.instance.AddEvent(new CmdMovement(backwardRight, _player));
+            else{
+                EventQueueManager.instance.AddEvent(new CmdMovement(backward, _player));
+                Debug.Log("backward is " + backward);
+            }
         }
         else if (Input.GetKey(_moveLeft))
-                EventQueueManager.instance.AddEvent(_cmdMoveLeft);
+            EventQueueManager.instance.AddEvent(new CmdMovement(left, _player));
         else if (Input.GetKey(_moveRight))
-                EventQueueManager.instance.AddEvent(_cmdMoveRight);
-        }
-
+            EventQueueManager.instance.AddEvent(new CmdMovement(right, _player));
+    }
 
     private void LateUpdate()
     {
@@ -227,8 +211,19 @@ public class CharacterInputManager : MonoBehaviour
         _cmdShoot =  new CmdShoot(_currentWeapon);
         _cmdReload = new CmdReload(_currentWeapon);
     }
-}
 
+    public void CalculateDirections(){
+        // Sin rotación especial, solo usa las direcciones del transform
+        this.forward = transform.forward;
+        this.backward = -transform.forward;
+        this.left = -transform.right;
+        this.right = transform.right;
+        this.forwardLeft = Vector3.Normalize(this.forward + this.left);
+        this.forwardRight = Vector3.Normalize(this.forward + this.right);
+        this.backwardLeft = Vector3.Normalize(this.backward + this.left);
+        this.backwardRight = Vector3.Normalize(this.backward + this.right);
+    }
+}
 
 
 
