@@ -27,6 +27,7 @@ public class CharacterInputManager : MonoBehaviour
     private KeyCode _switchPistol = KeyCode.Alpha1;
     private KeyCode _switchUzi = KeyCode.Alpha2;
     private KeyCode _switchShotgun = KeyCode.Alpha3;
+    private KeyCode _lose = KeyCode.Escape;
 
     Vector3 backward;
     Vector3 forward;
@@ -113,6 +114,10 @@ public class CharacterInputManager : MonoBehaviour
             _shotCooldownTimer += (int)(Time.deltaTime * 1000);
         }
 
+
+        if(Input.GetKeyDown(_lose)){
+            EventManager.instance.EventGameOver(false);
+        }
 
         // Recarga
         if (Input.GetKeyDown(_reload))
