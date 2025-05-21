@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentBulletCount: 30
-  _bulletPrefab: {fileID: 6944003692870370946, guid: 0dd371f56924b9c4fb65c6b343316efe, type: 3}
+  _bulletPrefab: {fileID: 7481477680704179074, guid: 50e26baf96b420f44accd2b3f6cc93cf, type: 3}
   _shotClip: {fileID: 8300000, guid: 8cb6eecf145bdab4b9862f58085b1d09, type: 3}
   _gunSprite: {fileID: 21300000, guid: 66f5a8d91444d6247a8732a9e6251f26, type: 3}
   _shotCount: 5
