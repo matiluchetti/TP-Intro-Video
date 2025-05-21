@@ -34,10 +34,10 @@ public class Machingun : Gun
                 break;
             }
 
-            Instantiate(
-                BulletPrefab,
-                transform.position + transform.forward * i * 0.6f ,
-                transform.rotation);
+                Instantiate(
+                    BulletPrefab,
+                    transform.position + Random.insideUnitSphere * 1,
+                    Quaternion.identity);
 
             _currentBulletCount--;
             actualShotsFired++;

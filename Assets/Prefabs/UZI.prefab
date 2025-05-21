@@ -136,7 +136,7 @@ Transform:
   m_GameObject: {fileID: 5138177016885228909}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5999999, z: 0.8000002}
+  m_LocalPosition: {x: 0, y: -0.5999999, z: -0.8000002}
   m_LocalScale: {x: 0.2, y: 0.8, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentBulletCount: 30
-  _bulletPrefab: {fileID: 2444335039650728946, guid: d7976b14d8ea0ee429af8763f2f5c655, type: 3}
+  _bulletPrefab: {fileID: 6944003692870370946, guid: 0dd371f56924b9c4fb65c6b343316efe, type: 3}
   _shotClip: {fileID: 8300000, guid: 8cb6eecf145bdab4b9862f58085b1d09, type: 3}
   _gunSprite: {fileID: 21300000, guid: 66f5a8d91444d6247a8732a9e6251f26, type: 3}
   _shotCount: 5
