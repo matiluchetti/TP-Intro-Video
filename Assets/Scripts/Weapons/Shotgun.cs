@@ -29,7 +29,7 @@ public class Shotgun : Gun
             {
                 Instantiate(
                     BulletPrefab,
-                    transform.position + Random.insideUnitSphere * 1,
+                    transform.position + transform.forward * 0.5f * i,
                     Quaternion.identity);
                 _currentBulletCount--;
             }

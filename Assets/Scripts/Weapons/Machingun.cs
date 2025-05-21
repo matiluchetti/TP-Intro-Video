@@ -34,7 +34,8 @@ public class Machingun : Gun
                 break;
             }
 
-                Instantiate(
+            Debug.Log("Bala instanciada en " + (transform.position + transform.forward * 2f * i));
+                 Instantiate(
                     BulletPrefab,
                     transform.position + Random.insideUnitSphere * 1,
                     Quaternion.identity);

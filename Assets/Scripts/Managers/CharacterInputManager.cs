@@ -141,8 +141,6 @@ public class CharacterInputManager : MonoBehaviour
         if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0.01f || Mathf.Abs(Input.GetAxis("Mouse Y")) > 0.01f)
         {
             EventQueueManager.instance.AddEvent(_cmdRotateTowardsMouse);
-            Debug.Log("Front is " + transform.forward);
-            Debug.Log("Right is " + transform.right);
             CalculateDirections();
         }
 

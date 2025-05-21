@@ -12,6 +12,9 @@ public class Bullet : MonoBehaviour, IBullet
     [SerializeField] private List<int> _layerMasks;
     private float _timeRemaining;
     private Quaternion rotation;
+    Vector3 _direction;
+
+
     #endregion
 
     #region I_BULLET_PROPERTIES
@@ -22,8 +25,7 @@ public class Bullet : MonoBehaviour, IBullet
 
     #region I_BULLET_METHODS
     public void Travel(){
-        GameObject player = GameObject.FindWithTag("Player");
-         transform.position +=rotation * transform.forward * Time.deltaTime * Speed;
+         transform.position +=  _direction* Time.deltaTime * Speed;
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -32,10 +34,12 @@ public class Bullet : MonoBehaviour, IBullet
         {
             IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
             damagable?.TakeDamage(Damage);
-        }
-
-        
             Destroy(this.gameObject);
+        }
+        else if (collision.gameObject.CompareTag("Wall"))
+        {
+            Destroy(this.gameObject);
+        }
     }
     #endregion
 
@@ -43,6 +47,7 @@ public class Bullet : MonoBehaviour, IBullet
     void Start() { 
         GameObject player = GameObject.FindWithTag("Player");
         rotation = player.transform.rotation;
+        _direction = player.transform.forward;
         _timeRemaining = _lifetime;
     }
 
