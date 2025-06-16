@@ -6,6 +6,15 @@ public class Shotgun : Gun
 {
     [SerializeField] private int _shotCount = 5;
     [SerializeField] private AudioClip _emptyClip;
+    private Animator anim;
+
+
+    private void OnEnable() {
+        if (anim == null)
+            anim = GetComponent<Animator>();
+            
+        anim.ResetTrigger("Reload"); 
+    }
 
     public override void Attack()
     {
@@ -45,5 +54,8 @@ public class Shotgun : Gun
         }
     }
 
-    public override void Reload() => base.Reload();
+    public override void Reload() {
+        anim.SetTrigger("Reload");
+        base.Reload();
+    }
 }

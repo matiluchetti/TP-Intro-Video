@@ -6,11 +6,19 @@ public class Pistol : Gun
 {
 
     [SerializeField] private AudioClip _emptyClip;
+    private Animator anim;
     
 
     public Pistol()
     {
         _maxBulletCount = 20; // Cambia el valor al crear la instancia
+    }
+
+    public void OnEnable(){
+        if (anim == null)
+            anim = GetComponent<Animator>();
+            
+        anim.ResetTrigger("Reload"); 
     }
 
     public override void Attack()
@@ -36,5 +44,8 @@ public class Pistol : Gun
         }
     }
 
-    public override void Reload() => base.Reload();
+    public override void Reload() { 
+        anim.SetTrigger("Reload");
+        base.Reload();
+    }
 }
