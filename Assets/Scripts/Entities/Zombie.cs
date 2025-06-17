@@ -19,6 +19,7 @@ public class ZombieAI : MonoBehaviour, IDamagable
     private Rigidbody _rb;
 
     public System.Action onDeath;
+    private Animator anim;
 
     void Start()
     {
@@ -30,6 +31,7 @@ public class ZombieAI : MonoBehaviour, IDamagable
         {
             target = player.transform;
         }
+        anim = GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -77,6 +79,7 @@ public class ZombieAI : MonoBehaviour, IDamagable
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            anim.SetTrigger("ZombieAttack");
             IDamagable player = collision.gameObject.GetComponent<IDamagable>();
             player?.TakeDamage(Mathf.RoundToInt(_damage));
 

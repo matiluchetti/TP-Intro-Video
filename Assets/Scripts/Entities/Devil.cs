@@ -150,6 +150,7 @@ private void Shoot()
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            anim.SetTrigger("DevilShot");
             IDamagable player = collision.gameObject.GetComponent<IDamagable>();
             player?.TakeDamage(Mathf.RoundToInt(_damage));
 
