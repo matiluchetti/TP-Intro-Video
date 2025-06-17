@@ -29,6 +29,7 @@ public class DevilAI : MonoBehaviour, IDamagable
     [SerializeField] private float bulletSpreadRadius = 1f;
     [SerializeField] private AudioClip shotClip;
     private float nextFireTime = 0f;
+    private Animator anim;
 
     private AudioSource _audioSource;
 
@@ -55,6 +56,7 @@ public class DevilAI : MonoBehaviour, IDamagable
             if (player != null)
                 target = player.transform;
         }
+        anim = GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -103,6 +105,8 @@ public class DevilAI : MonoBehaviour, IDamagable
 private void Shoot()
 {
     // Igualar la altura para disparar en el plano XZ
+    anim.SetTrigger("DevilShot");
+    // wait for the animation to finish before instantiating the bullet
     Vector3 targetPos = target.position;
     targetPos.y = firePoint.position.y;
 
@@ -114,6 +118,7 @@ private void Shoot()
     {
         _audioSource.PlayOneShot(shotClip);
     }
+
 
     Debug.Log($"Devil disparó. Dirección: {direction}, Rotación: {bulletRotation.eulerAngles}");
 }
