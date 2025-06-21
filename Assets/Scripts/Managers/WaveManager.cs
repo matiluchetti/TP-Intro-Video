@@ -56,7 +56,7 @@ public class WaveManager : MonoBehaviour
             EventManager.instance.EventRoundUpdate(currentWave); // Actualiza la oleada en el GameManager
 
 
-            if (currentWave % 2 == 0)
+            if (currentWave % 1 == 0)
             {
                 SpawnDevil();
             }

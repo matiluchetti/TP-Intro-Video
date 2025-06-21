@@ -173,7 +173,6 @@ public class CharacterInputManager : MonoBehaviour
                 EventQueueManager.instance.AddEvent(new CmdMovement(backwardRight, _player));
             else{
                 EventQueueManager.instance.AddEvent(new CmdMovement(backward, _player));
-                Debug.Log("backward is " + backward);
             }
         }
         else if (Input.GetKey(_moveLeft))

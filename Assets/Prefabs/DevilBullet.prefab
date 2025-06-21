@@ -124,4 +124,4 @@ MonoBehaviour:
   _damage: 30
   _speed: 25
   _lifetime: 5
-  _layerMasks: 00000000
+  _layerMasks: 0000000008000000

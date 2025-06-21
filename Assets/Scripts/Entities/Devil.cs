@@ -94,7 +94,7 @@ public class DevilAI : MonoBehaviour, IDamagable
         if (Time.time >= nextFireTime && bulletPrefab != null && firePoint != null && target != null)
         {
             float distanceToPlayer = Vector3.Distance(transform.position, target.position);
-            if (distanceToPlayer <= fireRange)
+            if (distanceToPlayer <= fireRange && CanShootPlayer())
             {
                 Shoot();
                 nextFireTime = Time.time + fireRate;
@@ -186,4 +186,57 @@ private void Shoot()
         this.speed = speed;
         this._damage = damage;
     }
+
+    // private bool CanShootPlayer()
+    // {
+    //     Vector3 directionToPlayer = target.position - transform.position;
+    //     Ray ray = new Ray(transform.position, directionToPlayer.normalized);
+    //     //draw ray
+    //     Debug.DrawRay(ray.origin, ray.direction * directionToPlayer.magnitude, Color.red);
+
+    //     if (Physics.Raycast(ray, out RaycastHit hit, directionToPlayer.magnitude)){
+    //         if (hit.transform.gameObject.layer == 8 && !hit.transform.CompareTag("Devil"))
+    //         {
+    //             Debug.Log("Disparo de diablo bloqueado por" + hit.transform.name);
+    //             Debug.Log("Disparo de diablo bloqueado por un zombie.");
+    //             nextFireTime = Time.time + fireRate;
+    //             return false;
+    //         }
+    //         Debug.Log("Disparo de diablo permitido hacia " + hit.transform.name);
+    //     }
+    //     return true; 
+    // }
+
+
+    private bool CanShootPlayer()
+        {
+            Vector3 directionToPlayer = target.position - transform.position;
+            Ray ray = new Ray(transform.position, directionToPlayer.normalized);
+            Debug.DrawRay(ray.origin, ray.direction * directionToPlayer.magnitude, Color.red);
+            RaycastHit[] hits = Physics.RaycastAll(ray, directionToPlayer.magnitude);
+            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+            
+            foreach (var hit in hits)
+            {
+                if (hit.transform.CompareTag("Devil"))
+                    continue;
+                
+                if (hit.transform.gameObject.layer == 8)
+                {
+                    Debug.Log("Disparo de diablo bloqueado por " + hit.transform.name);
+                    nextFireTime = Time.time + fireRate;
+                    return false;
+                }
+                
+                // Si es el jugador, permitir disparo
+                if (hit.transform == target)
+                {
+                    Debug.Log("Disparo de diablo permitido hacia " + hit.transform.name);
+                    return true;
+                }
+            }
+            
+            return true;
+        }
+
 }
