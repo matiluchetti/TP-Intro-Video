@@ -42,7 +42,13 @@ public class Gun : MonoBehaviour, IGun
 
     public virtual void Attack()
     {
-        Instantiate(_bulletPrefab, transform.position, transform.rotation);
+        GameObject bullet = Instantiate(_bulletPrefab, transform.position, transform.rotation);
+        FlyweightBullet flyweight = bullet.GetComponent<FlyweightBullet>();
+        if (flyweight != null)
+        {
+            flyweight.Initialize(transform.forward);
+        }
+
 
         if (_shotClip != null && _audioSource != null)
         {

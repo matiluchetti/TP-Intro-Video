@@ -119,13 +119,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6944003692870370946}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9296a21068a74894a9a418cf18c57ea9, type: 3}
+  m_Script: {fileID: 11500000, guid: 29bd1a64baaf34934b025c8b8f9184a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 15
-  _speed: 100
-  _lifetime: 5
-  _layerMasks: 08000000
+  bulletType: {fileID: 0}
+  _layerMasks: 
 --- !u!54 &-49764591459841291
 Rigidbody:
   m_ObjectHideFlags: 0
