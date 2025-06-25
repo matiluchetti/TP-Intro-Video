@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Zombie
   maxLife: 100
-  speed: 2
+  speed: 4
   damage: 10

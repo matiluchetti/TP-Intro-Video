@@ -3577,8 +3577,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 2
-  _maxLife: 100
+  enemyType: {fileID: 0}
+  bloodEffectPrefab: {fileID: 0}
 --- !u!95 &1565893583
 Animator:
   serializedVersion: 7

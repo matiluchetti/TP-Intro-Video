@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Devil
   maxLife: 300
-  speed: 2
+  speed: 4
   damage: 20
