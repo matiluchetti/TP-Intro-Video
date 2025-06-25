@@ -134,8 +134,6 @@ public class DevilAI : MonoBehaviour, IDamagable
             anim.SetTrigger("DevilShot");
             IDamagable player = collision.gameObject.GetComponent<IDamagable>();
             player?.TakeDamage(Mathf.RoundToInt(enemyType.damage));
-            Vector3 pushDir = (transform.position - collision.transform.position).normalized;
-            StartCoroutine(PushBack(pushDir * 10f, 0.3f));
         }
     }
 
