@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour, IBullet
     private float _timeRemaining;
     private Quaternion rotation;
     Vector3 _direction;
+    [SerializeField] private string sourceTag = "Player"; // Default to "Player"
 
     #endregion
 
@@ -42,9 +43,9 @@ public class Bullet : MonoBehaviour, IBullet
 
     #region UNITY_EVENTS
     void Start() { 
-        GameObject player = GameObject.FindWithTag("Player");
-        rotation = player.transform.rotation;
-        _direction = player.transform.forward;
+        GameObject source = GameObject.FindWithTag(sourceTag);
+        rotation = source.transform.rotation;
+        _direction = source.transform.forward;
         _timeRemaining = LifeTime;
     }
 
