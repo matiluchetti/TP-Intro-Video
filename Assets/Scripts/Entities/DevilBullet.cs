@@ -6,10 +6,7 @@ using Strategy;
 public class DevilBullet : MonoBehaviour, IBullet
 {
     #region PRIVATE_PROPERTEIS
-    [SerializeField] private int _damage = 10;
-    [SerializeField] private float _speed = 10;
-    [SerializeField] private float _lifetime = 5;
-    [SerializeField] private List<int> _layerMasks;
+    [SerializeField] private BulletTypeSO bulletType;
     private float _timeRemaining;
     private Quaternion rotation;
     Vector3 _direction;
@@ -18,19 +15,19 @@ public class DevilBullet : MonoBehaviour, IBullet
     #endregion
 
     #region I_BULLET_PROPERTIES
-    public int Damage => _damage;
-    public float Speed => _speed;
-    public float LifeTime => _lifetime;
+    public int Damage => bulletType.damage;
+    public float Speed => bulletType.speed;
+    public float LifeTime => bulletType.lifetime;
     #endregion
 
     #region I_BULLET_METHODS
     public void Travel(){
-         transform.position +=  _direction* Time.deltaTime * Speed;
+         transform.position +=  _direction * Time.deltaTime * Speed;
     }
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (_layerMasks.Contains(collision.gameObject.layer))
+        if (bulletType.layerMasks.Contains(collision.gameObject.layer))
         {
             IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
             damagable?.TakeDamage(Damage);
@@ -48,7 +45,7 @@ public class DevilBullet : MonoBehaviour, IBullet
         GameObject player = GameObject.FindWithTag("Devil");
         rotation = player.transform.rotation;
         _direction = player.transform.forward;
-        _timeRemaining = _lifetime;
+        _timeRemaining = LifeTime;
     }
 
     void Update()
