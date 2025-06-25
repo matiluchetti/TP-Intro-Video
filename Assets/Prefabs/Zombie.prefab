@@ -402,6 +402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemyType: {fileID: 11400000, guid: ecafeb2425e544feda1f7530fb00fb51, type: 2}
+  bloodEffectPrefab: {fileID: 1257000555802481843, guid: 748c9a9671ddd422a98a0fa4d462c565, type: 3}
 --- !u!54 &7652580307645840092
 Rigidbody:
   m_ObjectHideFlags: 0

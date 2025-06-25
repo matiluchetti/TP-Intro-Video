@@ -6,6 +6,7 @@ public class ZombieAI : MonoBehaviour, IDamagable
 {
     public Transform target;
     [SerializeField] private EnemyTypeSO enemyType;
+    [SerializeField] private GameObject bloodEffectPrefab;
     private float _currentLife;
     private bool isBeingPushedBack = false;
     private float originalSpeed;
@@ -52,6 +53,12 @@ public class ZombieAI : MonoBehaviour, IDamagable
     {
         _currentLife -= amount;
         Debug.Log($"Zombie recibió {amount} de daño. Vida restante: {_currentLife}");
+
+        if (bloodEffectPrefab != null)
+        {
+            Vector3 bloodPosition = transform.position + Vector3.forward * (-1.5f) + Vector3.up * 6f;
+            Instantiate(bloodEffectPrefab, bloodPosition, Quaternion.identity, transform);
+        }
 
         if (_currentLife <= 0)
         {
