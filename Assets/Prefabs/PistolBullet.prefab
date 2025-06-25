@@ -124,10 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9296a21068a74894a9a418cf18c57ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 20
-  _speed: 100
-  _lifetime: 5
-  _layerMasks: 08000000
+  bulletType: {fileID: 11400000, guid: 8a3df7d03f8864df9b508709f19e5fdd, type: 2}
+  sourceTag: Player
 --- !u!54 &8375600131654720752
 Rigidbody:
   m_ObjectHideFlags: 0

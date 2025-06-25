@@ -855,8 +855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 2
-  _maxLife: 300
+  enemyType: {fileID: 11400000, guid: 5e695d8181ca94bd185bec54adcf04cf, type: 2}
   bulletPrefab: {fileID: 6695184686978534684, guid: 3bcd1e432d1eb17438f714d9b4327d89, type: 3}
   firePoint: {fileID: 6038357233394090310}
   fireRate: 2

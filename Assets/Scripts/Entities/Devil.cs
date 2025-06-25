@@ -5,21 +5,13 @@ using System.Collections;
 public class DevilAI : MonoBehaviour, IDamagable
 {
     public Transform target;
-    public float speed = 2f;
-
-    [Header("Stats")]
-    [SerializeField] private float _maxLife = 300f;
+    [SerializeField] private EnemyTypeSO enemyType;
     private float _currentLife;
-    private float _damage = 20f;
-
-    public float Life => _currentLife;
-    public float MaxLife => _maxLife;
-
     private bool isBeingPushedBack = false;
     private float originalSpeed;
     private Rigidbody _rb;
-
     public System.Action onDeath;
+    private Animator anim;
 
     [Header("Disparo")]
     [SerializeField] private GameObject bulletPrefab;
@@ -29,24 +21,23 @@ public class DevilAI : MonoBehaviour, IDamagable
     [SerializeField] private float bulletSpreadRadius = 1f;
     [SerializeField] private AudioClip shotClip;
     private float nextFireTime = 0f;
-    private Animator anim;
-
     private AudioSource _audioSource;
+
+    public float Life => _currentLife;
+    public float MaxLife => enemyType.maxLife;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _audioSource = GetComponent<AudioSource>();
-
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        _currentLife = _maxLife;
+        _currentLife = enemyType.maxLife;
 
         if (player != null)
         {
             target = player.transform;
         }
     }
-
 
     void Awake()
     {
@@ -63,7 +54,6 @@ public class DevilAI : MonoBehaviour, IDamagable
     {
         if (target == null) return;
 
-        // Igualar la altura para evitar inclinaciones
         Vector3 targetPos = target.position;
         targetPos.y = transform.position.y;
 
@@ -74,7 +64,7 @@ public class DevilAI : MonoBehaviour, IDamagable
         float stopDistance = 1.5f; // Ajustá según tu juego
         if (distance > stopDistance)
         {
-            Vector3 newPos = _rb.position + direction * speed * Time.fixedDeltaTime;
+            Vector3 newPos = _rb.position + direction * enemyType.speed * Time.fixedDeltaTime;
             _rb.MovePosition(newPos);
         }
 
@@ -86,8 +76,6 @@ public class DevilAI : MonoBehaviour, IDamagable
 
         TryShoot();
     }
-
-
 
     private void TryShoot()
     {
@@ -102,27 +90,20 @@ public class DevilAI : MonoBehaviour, IDamagable
         }
     }
 
-private void Shoot()
-{
-    // Igualar la altura para disparar en el plano XZ
-    anim.SetTrigger("DevilShot");
-    // wait for the animation to finish before instantiating the bullet
-    Vector3 targetPos = target.position;
-    targetPos.y = firePoint.position.y;
-
-    Vector3 direction = (targetPos - firePoint.position).normalized;
-    Quaternion bulletRotation = Quaternion.LookRotation(direction);
-    GameObject bullet = Instantiate(bulletPrefab, firePoint.position, bulletRotation);
-
-    if (shotClip != null && _audioSource != null)
+    private void Shoot()
     {
-        _audioSource.PlayOneShot(shotClip);
+        anim.SetTrigger("DevilShot");
+        Vector3 targetPos = target.position;
+        targetPos.y = firePoint.position.y;
+        Vector3 direction = (targetPos - firePoint.position).normalized;
+        Quaternion bulletRotation = Quaternion.LookRotation(direction);
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, bulletRotation);
+        if (shotClip != null && _audioSource != null)
+        {
+            _audioSource.PlayOneShot(shotClip);
+        }
+        Debug.Log($"Devil disparó. Dirección: {direction}, Rotación: {bulletRotation.eulerAngles}");
     }
-
-
-    Debug.Log($"Devil disparó. Dirección: {direction}, Rotación: {bulletRotation.eulerAngles}");
-}
-
 
     public void TakeDamage(int amount)
     {
@@ -152,8 +133,7 @@ private void Shoot()
         {
             anim.SetTrigger("DevilShot");
             IDamagable player = collision.gameObject.GetComponent<IDamagable>();
-            player?.TakeDamage(Mathf.RoundToInt(_damage));
-
+            player?.TakeDamage(Mathf.RoundToInt(enemyType.damage));
             Vector3 pushDir = (transform.position - collision.transform.position).normalized;
             StartCoroutine(PushBack(pushDir * 10f, 0.3f));
         }
@@ -162,11 +142,8 @@ private void Shoot()
     private IEnumerator PushBack(Vector3 pushVector, float duration)
     {
         if (isBeingPushedBack) yield break;
-
         isBeingPushedBack = true;
-        originalSpeed = speed;
-        speed = 0;
-
+        originalSpeed = enemyType.speed;
         float timer = 0f;
         while (timer < duration)
         {
@@ -174,69 +151,43 @@ private void Shoot()
             timer += Time.deltaTime;
             yield return null;
         }
-
-        speed = originalSpeed;
         isBeingPushedBack = false;
     }
 
     public void SetStats(float life, float speed, float damage)
     {
-        _maxLife = life;
-        _currentLife = _maxLife;
-        this.speed = speed;
-        this._damage = damage;
+        _currentLife = life;
+        // You may want to add logic to override the SO or use a custom SO for special cases
     }
 
-    // private bool CanShootPlayer()
-    // {
-    //     Vector3 directionToPlayer = target.position - transform.position;
-    //     Ray ray = new Ray(transform.position, directionToPlayer.normalized);
-    //     //draw ray
-    //     Debug.DrawRay(ray.origin, ray.direction * directionToPlayer.magnitude, Color.red);
-
-    //     if (Physics.Raycast(ray, out RaycastHit hit, directionToPlayer.magnitude)){
-    //         if (hit.transform.gameObject.layer == 8 && !hit.transform.CompareTag("Devil"))
-    //         {
-    //             Debug.Log("Disparo de diablo bloqueado por" + hit.transform.name);
-    //             Debug.Log("Disparo de diablo bloqueado por un zombie.");
-    //             nextFireTime = Time.time + fireRate;
-    //             return false;
-    //         }
-    //         Debug.Log("Disparo de diablo permitido hacia " + hit.transform.name);
-    //     }
-    //     return true; 
-    // }
-
-
     private bool CanShootPlayer()
+    {
+        Vector3 directionToPlayer = target.position - transform.position;
+        Ray ray = new Ray(transform.position, directionToPlayer.normalized);
+        Debug.DrawRay(ray.origin, ray.direction * directionToPlayer.magnitude, Color.red);
+        RaycastHit[] hits = Physics.RaycastAll(ray, directionToPlayer.magnitude);
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+        
+        foreach (var hit in hits)
         {
-            Vector3 directionToPlayer = target.position - transform.position;
-            Ray ray = new Ray(transform.position, directionToPlayer.normalized);
-            Debug.DrawRay(ray.origin, ray.direction * directionToPlayer.magnitude, Color.red);
-            RaycastHit[] hits = Physics.RaycastAll(ray, directionToPlayer.magnitude);
-            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+            if (hit.transform.CompareTag("Devil"))
+                continue;
             
-            foreach (var hit in hits)
+            if (hit.transform.gameObject.layer == 8)
             {
-                if (hit.transform.CompareTag("Devil"))
-                    continue;
-                
-                if (hit.transform.gameObject.layer == 8)
-                {
-                    Debug.Log("Disparo de diablo bloqueado por " + hit.transform.name);
-                    nextFireTime = Time.time + fireRate;
-                    return false;
-                }
-                
-                // Si es el jugador, permitir disparo
-                if (hit.transform == target)
-                {
-                    Debug.Log("Disparo de diablo permitido hacia " + hit.transform.name);
-                    return true;
-                }
+                Debug.Log("Disparo de diablo bloqueado por " + hit.transform.name);
+                nextFireTime = Time.time + fireRate;
+                return false;
             }
             
-            return true;
+            // Si es el jugador, permitir disparo
+            if (hit.transform == target)
+            {
+                Debug.Log("Disparo de diablo permitido hacia " + hit.transform.name);
+                return true;
+            }
         }
-
+        
+        return true;
+    }
 }

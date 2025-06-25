@@ -5,27 +5,22 @@ using System.Collections;
 public class ZombieAI : MonoBehaviour, IDamagable
 {
     public Transform target;
-    public float speed = 2f;
-
-    [SerializeField] private float _maxLife = 100f;
+    [SerializeField] private EnemyTypeSO enemyType;
     private float _currentLife;
-    private float _damage = 10f;
-
-    public float Life => _currentLife;
-    public float MaxLife => _maxLife;
-
     private bool isBeingPushedBack = false;
     private float originalSpeed;
     private Rigidbody _rb;
-
     public System.Action onDeath;
     private Animator anim;
+
+    public float Life => _currentLife;
+    public float MaxLife => enemyType.maxLife;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        _currentLife = _maxLife;
+        _currentLife = enemyType.maxLife;
 
         if (player != null)
         {
@@ -42,7 +37,7 @@ public class ZombieAI : MonoBehaviour, IDamagable
         direction.y = 0f; 
         direction.Normalize();
 
-        Vector3 newPos = _rb.position + direction * speed * Time.fixedDeltaTime;
+        Vector3 newPos = _rb.position + direction * enemyType.speed * Time.fixedDeltaTime;
         newPos.y = 0f;
         _rb.MovePosition(newPos);
 
@@ -81,7 +76,7 @@ public class ZombieAI : MonoBehaviour, IDamagable
         {
             anim.SetTrigger("ZombieAttack");
             IDamagable player = collision.gameObject.GetComponent<IDamagable>();
-            player?.TakeDamage(Mathf.RoundToInt(_damage));
+            player?.TakeDamage(Mathf.RoundToInt(enemyType.damage));
 
             Vector3 pushDir = (transform.position - collision.transform.position).normalized;
             StartCoroutine(PushBack(pushDir * 10f, 0.3f));
@@ -93,8 +88,7 @@ public class ZombieAI : MonoBehaviour, IDamagable
         if (isBeingPushedBack) yield break;
 
         isBeingPushedBack = true;
-        originalSpeed = speed;
-        speed = 0;
+        originalSpeed = enemyType.speed;
 
         float timer = 0f;
         while (timer < duration)
@@ -104,15 +98,11 @@ public class ZombieAI : MonoBehaviour, IDamagable
             yield return null;
         }
 
-        speed = originalSpeed;
         isBeingPushedBack = false;
     }
 
     public void SetStats(float life, float speed, float damage)
     {
-        _maxLife = life;
-        _currentLife = _maxLife;
-        this.speed = speed;
-        this._damage = damage;
+        _currentLife = life;
     }
 }

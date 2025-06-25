@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbaa9b89a45c34e29b3577d6221b1f0a, type: 3}
-  m_Name: ShotgunBulletType
+  m_Script: {fileID: 11500000, guid: 0af14c6e56dd54310be2b70a99d6c5a4, type: 3}
+  m_Name: ZombieType
   m_EditorClassIdentifier: 
-  damage: 15
-  speed: 100
-  lifetime: 5
-  layerMasks: 08000000
+  enemyName: Zombie
+  maxLife: 100
+  speed: 2
+  damage: 10
