@@ -6,6 +6,7 @@ public class WaveManager : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject devilPrefab;
+    [SerializeField] private GameObject megaBossPrefab;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private int enemiesPerWave = 1;
     [SerializeField] private float timeBetweenWaves = 5f;
@@ -52,13 +53,16 @@ public class WaveManager : MonoBehaviour
         currentWave++;
         if (currentWave <= TOTAL_WAVES)
         {
-            SpawnWave();
-            EventManager.instance.EventRoundUpdate(currentWave); // Actualiza la oleada en el GameManager
-
-
-            if (currentWave % 1 == 0)
+            if(currentWave % 1 == 0)
             {
+                SpawnMegaBoss();
+            }
+            else if (currentWave % 2 == 0)
+            {
+                SpawnWave();
+                EventManager.instance.EventRoundUpdate(currentWave); // Actualiza la oleada en el GameManager
                 SpawnDevil();
+                
             }
 
             Debug.Log($"Iniciando oleada {currentWave} de {TOTAL_WAVES}");
@@ -121,5 +125,28 @@ public class WaveManager : MonoBehaviour
 
         activeEnemies.Add(devil);
         Debug.Log("👹 ¡Ha aparecido un Devil!");
+    }
+    
+
+    private void SpawnMegaBoss()
+    {
+        int index = Random.Range(0, spawnPoints.Length);
+        Transform spawnPoint = spawnPoints[index];
+
+        GameObject megaBoss = Instantiate(megaBossPrefab, spawnPoint.position, Quaternion.identity);
+        megaBoss.transform.position = new Vector3(megaBoss.transform.position.x, 1f, megaBoss.transform.position.z); // fuerza Y=1
+        MegaBoss megaBossComponent = megaBoss.GetComponent<MegaBoss>();
+        if (megaBossComponent != null)
+        {
+            megaBossComponent.SetStats(
+                1500 + currentWave * 30f, // vida
+                15f + currentWave * 0.1f,   // velocidad
+                100f + currentWave * 10f   // daño
+            );
+        }
+
+        activeEnemies.Add(megaBoss);
+        Debug.Log($"👾 ¡Ha aparecido un Mega Boss en la posicion {spawnPoint.position}!");
+        Debug.Log("👾 ¡Ha aparecido un Mega Boss!");
     }
 }
