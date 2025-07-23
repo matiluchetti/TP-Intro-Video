@@ -61,7 +61,7 @@ public class DevilAI : MonoBehaviour, IDamagable
         float distance = direction.magnitude;
         direction.Normalize();
 
-        float stopDistance = 1.5f; // Ajustá según tu juego
+        float stopDistance = 1.5f; 
         if (distance > stopDistance)
         {
             Vector3 newPos = _rb.position + direction * enemyType.speed * Time.fixedDeltaTime;
@@ -154,7 +154,6 @@ public class DevilAI : MonoBehaviour, IDamagable
     public void SetStats(float life, float speed, float damage)
     {
         _currentLife = life;
-        // You may want to add logic to override the SO or use a custom SO for special cases
     }
 
     private bool CanShootPlayer()

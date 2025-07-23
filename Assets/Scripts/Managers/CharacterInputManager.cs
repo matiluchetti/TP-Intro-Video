@@ -156,7 +156,7 @@ public class CharacterInputManager : MonoBehaviour
 
 
 
-        // Direcciones actualizadas en tiempo real según rotación del personaje
+        
 
 
 
@@ -188,7 +188,7 @@ public class CharacterInputManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        // Cámara sigue al objetivo
+        
         _cameraTransform.position = Vector3.Lerp(_cameraTransform.position, camTarget.position, camPLerp);
         _cameraTransform.rotation = Quaternion.Lerp(_cameraTransform.rotation, camTarget.rotation, camRLerp);
     }

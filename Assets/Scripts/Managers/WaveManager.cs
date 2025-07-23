@@ -53,12 +53,12 @@ public class WaveManager : MonoBehaviour
         currentWave++;
         if (currentWave <= TOTAL_WAVES)
         {
-            if(currentWave % 1 == 0)
+            if(currentWave % 10 == 0)
             {
                 SpawnMegaBoss();
                 EventManager.instance.EventRoundUpdate(currentWave);
             }
-            else if (currentWave % 2 == 0)
+            else if (currentWave % 1 == 0)
             {
                 SpawnWave();
                 EventManager.instance.EventRoundUpdate(currentWave); // Actualiza la oleada en el GameManager

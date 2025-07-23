@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour, IBullet
     private float _timeRemaining;
     private Quaternion rotation;
     Vector3 _direction;
-    [SerializeField] private string sourceTag = "Player"; // Default to "Player"
+    [SerializeField] private string sourceTag = "Player"; 
 
     #endregion
 

@@ -83,7 +83,7 @@ public class MegaBoss : MonoBehaviour, IDamagable
         if (Time.time >= nextFireTime && bulletPrefab != null && firePoint != null && target != null)
         {
             float distanceToPlayer = Vector3.Distance(transform.position, target.position);
-            if (distanceToPlayer <= fireRange && CanShootPlayer())
+            if (distanceToPlayer <= fireRange)
             {
                 Shoot();
                 nextFireTime = Time.time + fireRate;
@@ -93,7 +93,7 @@ public class MegaBoss : MonoBehaviour, IDamagable
 
     private void Shoot()
     {
-        // anim.SetTrigger("DevilShot");
+        
         Vector3 targetPos = target.position;
         targetPos.y = firePoint.position.y;
         Vector3 randomSpread = new Vector3(
@@ -120,7 +120,7 @@ public class MegaBoss : MonoBehaviour, IDamagable
     public void TakeDamage(int amount)
     {
         _currentLife -= amount;
-        Debug.Log($"Devil recibió {amount} de daño. Vida restante: {_currentLife}");
+        Debug.Log($"MegaBoss recibió {amount} de daño. Vida restante: {_currentLife}");
 
         if (_currentLife <= 0)
         {
@@ -143,7 +143,6 @@ public class MegaBoss : MonoBehaviour, IDamagable
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            anim.SetTrigger("DevilShot");
             IDamagable player = collision.gameObject.GetComponent<IDamagable>();
             player?.TakeDamage(Mathf.RoundToInt(enemyType.damage));
         }
@@ -154,7 +153,6 @@ public class MegaBoss : MonoBehaviour, IDamagable
     public void SetStats(float life, float speed, float damage)
     {
         _currentLife = life;
-        // You may want to add logic to override the SO or use a custom SO for special cases
     }
 
     private IEnumerator PushBack(Vector3 pushVector, float duration)
@@ -172,32 +170,4 @@ public class MegaBoss : MonoBehaviour, IDamagable
         isBeingPushedBack = false;
     }
 
-        private bool CanShootPlayer()
-    {
-        Vector3 directionToPlayer = target.position - transform.position;
-        Ray ray = new Ray(transform.position, directionToPlayer.normalized);
-        Debug.DrawRay(ray.origin, ray.direction * directionToPlayer.magnitude, Color.red);
-        RaycastHit[] hits = Physics.RaycastAll(ray, directionToPlayer.magnitude);
-        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
-        
-        foreach (var hit in hits)
-        {
-            if (hit.transform.CompareTag("Devil"))
-                continue;
-            
-            if (hit.transform.gameObject.layer == 8)
-            {
-                nextFireTime = Time.time + fireRate;
-                return false;
-            }
-            
-            // Si es el jugador, permitir disparo
-            if (hit.transform == target)
-            {
-                return true;
-            }
-        }
-        
-        return true;
-    }
 }

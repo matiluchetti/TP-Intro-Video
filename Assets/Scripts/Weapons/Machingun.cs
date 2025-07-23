@@ -53,7 +53,7 @@ public class Machingun : Gun
             _currentBulletCount--;
             actualShotsFired++;
         }
-        EventManager.instance.EventGunUpdate(this); // Actualiza el UI
+        EventManager.instance.EventGunUpdate(this); 
 
         if (actualShotsFired > 0 && _shotClip != null && _audioSource != null)
         {
