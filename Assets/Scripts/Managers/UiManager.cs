@@ -57,12 +57,12 @@ public class UiManager : MonoBehaviour
     private void InitRoundUpdater()
     {
         EventManager.instance.OnRoundUpdate += OnRoundUpdate;
-        roundText.text = "Oleada: 1"; // Inicializa el texto de la ronda
+        roundText.text = "Oleada 1"; // Inicializa el texto de la ronda
     }
 
     private void OnRoundUpdate(int round)
     {
-        roundText.text = $"Oleada: {round}";
+        roundText.text = $"Oleada {round}";
     }
 
     #endregion

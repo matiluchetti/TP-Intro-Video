@@ -56,6 +56,7 @@ public class WaveManager : MonoBehaviour
             if(currentWave % 1 == 0)
             {
                 SpawnMegaBoss();
+                EventManager.instance.EventRoundUpdate(currentWave);
             }
             else if (currentWave % 2 == 0)
             {

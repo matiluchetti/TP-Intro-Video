@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   speed: 100
-  lifetime: 5
+  lifetime: 0.3
   layerMasks: 08000000

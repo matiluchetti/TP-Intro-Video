@@ -28,6 +28,7 @@ public class CharacterInputManager : MonoBehaviour
     private KeyCode _switchUzi = KeyCode.Alpha2;
     private KeyCode _switchShotgun = KeyCode.Alpha3;
     private KeyCode _lose = KeyCode.Escape;
+    private KeyCode _win = KeyCode.Alpha0;
 
     Vector3 backward;
     Vector3 forward;
@@ -117,6 +118,10 @@ public class CharacterInputManager : MonoBehaviour
 
         if(Input.GetKeyDown(_lose)){
             EventManager.instance.EventGameOver(false);
+        }
+
+        if(Input.GetKeyDown(_win)){
+            EventManager.instance.EventGameOver(true);
         }
 
         // Recarga

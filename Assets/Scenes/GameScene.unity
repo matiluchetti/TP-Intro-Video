@@ -208,9 +208,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Oleada 1
-
-'
+  m_text: Oleada 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b25f1dfcf1db74565ac8965a0d8abde5, type: 2}
   m_sharedMaterial: {fileID: -266848441603731267, guid: b25f1dfcf1db74565ac8965a0d8abde5, type: 2}
@@ -1010,7 +1008,7 @@ MonoBehaviour:
   _lifeBar: {fileID: 2018236712}
   _bulletText: {fileID: 2066559040}
   gunImage: {fileID: 1399514842}
-  roundText: {fileID: 0}
+  roundText: {fileID: 120057958}
 --- !u!1 &344426207
 GameObject:
   m_ObjectHideFlags: 0

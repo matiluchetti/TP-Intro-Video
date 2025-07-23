@@ -102,7 +102,6 @@ public class DevilAI : MonoBehaviour, IDamagable
         {
             _audioSource.PlayOneShot(shotClip);
         }
-        Debug.Log($"Devil disparó. Dirección: {direction}, Rotación: {bulletRotation.eulerAngles}");
     }
 
     public void TakeDamage(int amount)
@@ -173,7 +172,6 @@ public class DevilAI : MonoBehaviour, IDamagable
             
             if (hit.transform.gameObject.layer == 8)
             {
-                Debug.Log("Disparo de diablo bloqueado por " + hit.transform.name);
                 nextFireTime = Time.time + fireRate;
                 return false;
             }
@@ -181,7 +179,6 @@ public class DevilAI : MonoBehaviour, IDamagable
             // Si es el jugador, permitir disparo
             if (hit.transform == target)
             {
-                Debug.Log("Disparo de diablo permitido hacia " + hit.transform.name);
                 return true;
             }
         }
