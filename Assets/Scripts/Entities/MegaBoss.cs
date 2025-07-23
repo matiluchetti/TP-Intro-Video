@@ -18,7 +18,7 @@ public class MegaBoss : MonoBehaviour, IDamagable
     [SerializeField] private Transform firePoint;
     [SerializeField] private float fireRate = 2f;
     [SerializeField] private float fireRange = 15f;
-    [SerializeField] private float bulletSpreadRadius = 1f;
+    [SerializeField] private float bulletSpreadRadius = 4f;
     [SerializeField] private AudioClip shotClip;
     private float nextFireTime = 0f;
     private AudioSource _audioSource;
