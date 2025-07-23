@@ -11,7 +11,7 @@ public class Pistol : Gun
 
     public Pistol()
     {
-        _maxBulletCount = 20; // Cambia el valor al crear la instancia
+        _maxBulletCount = 20;
     }
 
     public void OnEnable(){
@@ -36,7 +36,7 @@ public class Pistol : Gun
         Instantiate(BulletPrefab, transform.position, Quaternion.identity);
         _currentBulletCount--;
 
-        EventManager.instance.EventGunUpdate(this); // Actualiza el UI
+        EventManager.instance.EventGunUpdate(this);
 
         if (_shotClip != null && _audioSource != null)
         {

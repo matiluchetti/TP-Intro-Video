@@ -10,8 +10,8 @@ public class Gun : MonoBehaviour, IGun
     protected int _maxBulletCount = 30;
     [SerializeField] protected int _currentBulletCount;
     [SerializeField] private GameObject _bulletPrefab;
-    [SerializeField] protected AudioClip _shotClip; // Clip de sonido a asignar en el Inspector
-    [SerializeField] private Sprite _gunSprite; // Sprite de la pistola a asignar en el Inspector
+    [SerializeField] protected AudioClip _shotClip;
+    [SerializeField] private Sprite _gunSprite;
     
     #endregion
 

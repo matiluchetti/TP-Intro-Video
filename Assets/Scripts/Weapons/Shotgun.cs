@@ -45,7 +45,7 @@ public class Shotgun : Gun
 
         }
 
-        EventManager.instance.EventGunUpdate(this); // Actualiza el UI
+        EventManager.instance.EventGunUpdate(this);
 
         if (_shotClip != null && _audioSource != null)
         {

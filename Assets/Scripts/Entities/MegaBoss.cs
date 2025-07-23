@@ -102,13 +102,10 @@ public class MegaBoss : MonoBehaviour, IDamagable
         Random.Range(-bulletSpreadRadius, bulletSpreadRadius)
         );
     
-    // Aplicar la dispersión a la posición objetivo
     Vector3 spreadTarget = targetPos + randomSpread;
     
-    // Calcular la dirección con dispersión
     Vector3 direction = (spreadTarget - firePoint.position).normalized;
 
-        // Vector3 direction = (targetPos - firePoint.position).normalized;
         Quaternion bulletRotation = Quaternion.LookRotation(direction);
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, bulletRotation);
         if (shotClip != null && _audioSource != null)

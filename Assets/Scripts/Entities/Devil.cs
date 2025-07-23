@@ -61,7 +61,7 @@ public class DevilAI : MonoBehaviour, IDamagable
         float distance = direction.magnitude;
         direction.Normalize();
 
-        float stopDistance = 1.5f; 
+        float stopDistance = 1.5f;
         if (distance > stopDistance)
         {
             Vector3 newPos = _rb.position + direction * enemyType.speed * Time.fixedDeltaTime;
@@ -175,7 +175,6 @@ public class DevilAI : MonoBehaviour, IDamagable
                 return false;
             }
             
-            // Si es el jugador, permitir disparo
             if (hit.transform == target)
             {
                 return true;
