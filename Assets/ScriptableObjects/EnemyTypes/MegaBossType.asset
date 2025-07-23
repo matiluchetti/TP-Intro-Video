@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af14c6e56dd54310be2b70a99d6c5a4, type: 3}
   m_Name: MegaBossType
   m_EditorClassIdentifier: 
-  enemyName: Zombie
-  maxLife: 100
-  speed: 4
-  damage: 10
+  enemyName: MegaBoss
+  maxLife: 1000
+  speed: 10
+  damage: 100
