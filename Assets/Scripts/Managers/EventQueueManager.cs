@@ -24,7 +24,6 @@ namespace Managers
 
         private void Update()
         {
-            // Se recorre al revés para poder eliminar elementos sin alterar la lista.
             for (int i = _events.Count - 1; i >= 0; i--)
             {
                 _events[i].Execute();

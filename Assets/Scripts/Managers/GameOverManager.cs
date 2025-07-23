@@ -17,7 +17,6 @@ public class GameOverManager : MonoBehaviour
         Debug.Log("isVictory: " + isVictory);
 
         gameOverText.text = isVictory ? "Victory!" : "Defeat!";
-        // gameOverText.color = isVictory ? Color.blue : Color.red;
 
         SoundManager.Instance?.PlayGameOverSound(isVictory);
     }

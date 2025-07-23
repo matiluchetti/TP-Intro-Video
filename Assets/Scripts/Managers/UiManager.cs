@@ -15,7 +15,7 @@ public class UiManager : MonoBehaviour
     private void InitLifeUpdater()
     {
         EventManager.instance.OnLifeUpdate += OnLifeUpdate;
-        _lifeBar.fillAmount = 1f; // Inicializa la barra de vida al 100%
+        _lifeBar.fillAmount = 1f; 
     }
 
 
@@ -49,7 +49,7 @@ public class UiManager : MonoBehaviour
 
     private void OnGunUpdate(Gun gun)
     {
-        _bulletText.text = $"{gun.CurrentBullets}/{gun.MaxBulletCount}"; // Actualiza el texto de las balas
+        _bulletText.text = $"{gun.CurrentBullets}/{gun.MaxBulletCount}"; 
         gunImage.sprite = gun.GunSprite;
     }
 
@@ -57,7 +57,7 @@ public class UiManager : MonoBehaviour
     private void InitRoundUpdater()
     {
         EventManager.instance.OnRoundUpdate += OnRoundUpdate;
-        roundText.text = "Oleada 1"; // Inicializa el texto de la ronda
+        roundText.text = "Oleada 1"; 
     }
 
     private void OnRoundUpdate(int round)

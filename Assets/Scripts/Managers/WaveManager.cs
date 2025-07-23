@@ -41,7 +41,7 @@ public class WaveManager : MonoBehaviour
         isWaitingForNextWave = true;
         Debug.Log("Invocando OnWaveEnded. Suscriptores: " + (OnWaveEnded?.GetInvocationList()?.Length ?? 0));
   
-        OnWaveEnded?.Invoke(); // <-- Agregá esta línea
+        OnWaveEnded?.Invoke(); 
         Debug.Log($"Esperando {timeBetweenWaves} segundos para la siguiente oleada...");
         yield return new WaitForSeconds(timeBetweenWaves);
         isWaitingForNextWave = false;
@@ -61,7 +61,7 @@ public class WaveManager : MonoBehaviour
             else if (currentWave % 1 == 0)
             {
                 SpawnWave();
-                EventManager.instance.EventRoundUpdate(currentWave); // Actualiza la oleada en el GameManager
+                EventManager.instance.EventRoundUpdate(currentWave); 
                 SpawnDevil();
                 
             }
@@ -113,7 +113,7 @@ public class WaveManager : MonoBehaviour
         Transform spawnPoint = spawnPoints[index];
 
         GameObject devil = Instantiate(devilPrefab, spawnPoint.position, Quaternion.identity);
-        devil.transform.position = new Vector3(devil.transform.position.x, 1f, devil.transform.position.z); // fuerza Y=1
+        devil.transform.position = new Vector3(devil.transform.position.x, 1f, devil.transform.position.z); 
         DevilAI devilComponent = devil.GetComponent<DevilAI>();
         if (devilComponent != null)
         {
@@ -135,7 +135,7 @@ public class WaveManager : MonoBehaviour
         Transform spawnPoint = spawnPoints[index];
 
         GameObject megaBoss = Instantiate(megaBossPrefab, spawnPoint.position, Quaternion.identity);
-        megaBoss.transform.position = new Vector3(megaBoss.transform.position.x, 1f, megaBoss.transform.position.z); // fuerza Y=1
+        megaBoss.transform.position = new Vector3(megaBoss.transform.position.x, 1f, megaBoss.transform.position.z); 
         MegaBoss megaBossComponent = megaBoss.GetComponent<MegaBoss>();
         if (megaBossComponent != null)
         {

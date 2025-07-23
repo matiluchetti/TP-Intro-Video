@@ -19,7 +19,6 @@ public class SoundManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            // DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -36,7 +35,7 @@ public class SoundManager : MonoBehaviour
         {
             EventManager.instance.OnGameOver += OnGameOver;
         }
-        WaveManager.OnWaveEnded += OnWaveEnded; // Suscribite
+        WaveManager.OnWaveEnded += OnWaveEnded; 
     }
 
     void OnDisable()
@@ -46,7 +45,7 @@ public class SoundManager : MonoBehaviour
         {
             EventManager.instance.OnGameOver -= OnGameOver;
         }
-        WaveManager.OnWaveEnded -= OnWaveEnded; // Desuscribite
+        WaveManager.OnWaveEnded -= OnWaveEnded; 
     }
 
     private void OnWaveEnded()
